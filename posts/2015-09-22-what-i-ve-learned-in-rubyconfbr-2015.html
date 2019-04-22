@@ -1,0 +1,800 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>O que eu aprendi na RubyConf Brasil 2015 - wevtimoteo</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <header id="top">
+        <h1><a href="/">wevtimoteo</a></h1>
+        <p>kairos _ sharing _ tech _ learning _ kaizen _ path</p>
+      </header>
+
+      <nav>
+<ul>
+  <li><a href="/posts">Posts</a></li>
+  <li><a href="/about.html">About</a></li>
+</ul>
+</nav>
+
+      <hr />
+
+      <main>
+        
+<h1>O que eu aprendi na RubyConf Brasil 2015</h1>
+
+<em>Posted on Tuesday, 22 Sep 2015</em>
+
+<p>Segue minhas anotações da RubyConf que eu acredito que pode ajudar muitas pessoas de vários níveis de conhecimento.</p>
+<p>Para anotar conteúdo eu pensei em todos, me preocupando em anotar dicas para iniciantes também :)</p>
+<h2>Criando aplicativos Rails de fácil manutenção</h2>
+<h3>Nando Vieira - <a href="https://twitter.com/fnando">@fnando</a></h3>
+<ul>
+<li><a href="https://speakerdeck.com/fnando/criando-aplicacoes-mais-faceis-de-manter-com-ruby-on-rails">Slides</a>
+</li>
+</ul>
+<p>Foco em mostrar como sair do padrão Rails-way e ir para uma abordagem de acordo com a necessidade dentro do framework.</p>
+<p>Algumas dicas:</p>
+<ul>
+<li>Testar o suficiente para ganhar confiança no código que foi escrito
+</li>
+<li>Buscar equilíbrio nas arquiteturas, tomar cuidado com over engineering
+</li>
+<li>Sempre buscar gerar valor, sempre pensando em devolver o ‘custo funcionário’ para empresa, quando em dúvida sobre uma nova feature
+</li>
+<li>Independente da abordagem (monolítica ou microservices) prezar pela qualidade (escrever testes é essencial)
+</li>
+<li>App do Shopify tem alguns exemplos de como manter qualidade em uma app monolítica (https://github.com/Shopify)
+</li>
+<li>Fugir do Rails-Way sempre que possível (experimentar bastante), ganhando experiência sobre outras abordagens
+</li>
+<li>Adaptar estrutura do Rails para sua necessidade
+</li>
+<li>Ao criar uma pasta na estrutura do Rails, se preocupar se o pattern está corretamente implementado (presenters, seguir o pattern presenters mesmo)
+</li>
+<li>Evitar uso de callbacks para lógica de negócios, usar apenas para normalização de objeto/params
+</li>
+<li>Extrair lógica das views (usar helpers, presenters, etc)
+</li>
+<li>Controller não deve ter lógica de negócio, já a regra de negócio não deve ter conhecimento de coisas de controller
+</li>
+<li>Sempre tentar diminuir o número de dependências/gems, considerando até reimplementar como uma lib interna somente com as features utilizadas
+</li>
+<li>Não modificar arquivos de config do Rails diretamente no config e sim fazer isso reabrindo o objeto de config dentro de um initializer, facilitando upgrades de versão e diff com o que é realmente necessário.
+</li>
+<li>Refatorar é melhor que reescrever
+</li>
+<li>Não começar uma app com uma arquitetura complicada/complexa sem necessidade
+</li>
+<li>Sempre considerar sua experiência com patterns antes de decidir adotar algum que teoricamente resolveria seu problema
+</li>
+<li>Não tenha medo de experimentar
+</li>
+<li>Ter um bom design de código é mais importante que ter uma arquitetura bem elaborada
+</li>
+</ul>
+<h4>Links úteis:</h4>
+<ul>
+<li>Lib de log Scroll <a href="https://github.com/asenchi/scrolls">https://github.com/asenchi/scrolls</a>
+</li>
+<li>O Diego Eis também fez algumas anotações dessa palestra: <a href="http://diegoeis.com/rubyconf2015-nando/">http://diegoeis.com/rubyconf2015-nando/</a>
+</li>
+</ul>
+<h2>Don’t Fear the GIL: What Ruby has in the box for concurrent programming</h2>
+<h4>Renan Ranelli - <a href="https://twitter.com/renanranelli">@renanranelli</a></h4>
+<ul>
+<li><a href="https://speakerdeck.com/rranelli/dont-fear-the-gil-what-ruby-has-in-the-box-for-concurrent-programming">Slides</a>
+</li>
+<li><a href="http://milhouseonsoftware.com/">Blog</a>
+</li>
+</ul>
+<p>Foco em mostrar como funciona o GIL (Global Interpreter Lock) funciona e alguns modelos de concorrência que podem funcionar para uma abordagem concorrente.</p>
+<p>Concorrência e paralelismo são coisas distintas.</p>
+<p>Concorrência: 2 tarefas começam ao mesmo tempo em cores do processador distintos, podendo terminar em tempos diferentes</p>
+<p>Paralelismo: 2 tarefas começam ao mesmo tempo no mesmo core de um processador, disputando pelo processamento</p>
+<p>Assíncronismo: Rodar de forma independente, isolada.</p>
+<h4>Alguns modelos de concorrência:</h4>
+<ul>
+<li>Multiprocesses
+</li>
+<li>Multithreading
+</li>
+<li>Coroutines <a href="http://blog.ontoillogical.com/blog/2014/07/21/delimited-continuations-in-ruby-part-2/">http://blog.ontoillogical.com/blog/2014/07/21/delimited-continuations-in-ruby-part-2/</a>
+</li>
+<li>Fibers <a href="http://ruby-doc.org/core-2.2.0/Fiber.html">http://ruby-doc.org/core-2.2.0/Fiber.html</a>
+</li>
+<li>Actors (Celluloid - https://celluloid.io/)
+</li>
+<li>CSP e Process Calculus <a href="https://en.wikipedia.org/wiki/Process_calculus">https://en.wikipedia.org/wiki/Process_calculus</a>
+</li>
+</ul>
+<p><em>GIL:</em> Global Interpreter Lock previne execução de código Ruby paralela (espécie de semáforo).</p>
+<p>Multithreading (https://github.com/ruby-concurrency/concurrent-ruby)</p>
+<h4>Algumas abstrações:</h4>
+<ul>
+<li>Thread Pools
+</li>
+<li>Ivars
+</li>
+<li>Futures
+</li>
+<li>Promises
+</li>
+<li>Channels
+</li>
+</ul>
+<p>OBS: Trap do <code class="inline">ruby</code> só funciona pro main processes. Para matar sub processes utilizar <code class="inline">throw</code>.</p>
+<p><em>Ivar:</em> “Safe to write”, “Safe to read”
+<em>Futures:</em>  Bom uso para chamadas de API
+<em>Promises:</em> Igual Futures mas chainables (Monads)</p>
+<h4>Lições aprendidas com programação concorrente:</h4>
+<ul>
+<li>Eliminar timeouts do código
+</li>
+<li>Cuidado com o pool do ActiveRecord
+</li>
+<li>Atualize suas dependências
+</li>
+<li>Testes bem
+</li>
+<li>Monitore: LEELA (Graph database em Haskell): https://github.com/locaweb/leela
+</li>
+<li>Não faça concurrent programming desnecessariamente
+</li>
+<li>Abordagem de variáveis imutáveis
+</li>
+</ul>
+<h2>Ruby + Linux Pipes + Bancos de Grafos + Suor</h2>
+<h3>Ronie Uliana - <a href="https://twitter.com/ronie">@ronie</a></h3>
+<p><em>Slides:</em> <a href="https://github.com/ruliana/palestra-rubyconf2015">https://github.com/ruliana/palestra-rubyconf2015</a></p>
+<ul>
+<li>A partir do Ruby 2.0 processos trabalham com estratégia Copy-on-write
+</li>
+<li>Sort do linux + rápido que sort do Ruby
+</li>
+<li>Livro - Flow based programming (http://www.jpaulmorrison.com/fbp/)
+</li>
+<li>Hadoop FTW :P
+</li>
+</ul>
+<h2>Como escrever aplicações ricas embarcadas em Ruby</h2>
+<h3>Thiago Scalone - <a href="https://twitter.com/scalone">@scalone</a></h3>
+<p>Slides: Ainda não foi postado, mas existe uma palestra semelhante em <a href="https://speakerdeck.com/scalone/mruby-change-the-embedded-development-way-1">https://speakerdeck.com/scalone/mruby-change-the-embedded-development-way-1</a></p>
+<p>Palestra focada em apresentar <code class="inline">mruby</code> (Ruby para dispositivos embarcados) e algumas soluções para IoT (Internet of Things/Internet das Coisas).</p>
+<p>CEO da Cisco prevê um mercado de $ 19 trilhões para o mercado IoT.</p>
+<h4>MRuby:</h4>
+<ul>
+<li>Static c/ Ruby Gems
+</li>
+<li>Pequeno
+</li>
+<li>Portátil
+</li>
+<li>Economia de recursos (60 Kb)
+</li>
+<li>ANSI C
+</li>
+<li>Artoo
+</li>
+</ul>
+<h4>Framework Ruby para Robótica</h4>
+<p><a href="http://artoo.io/">http://artoo.io/</a></p>
+<ul>
+<li>API Ruby simples
+</li>
+<li>15 plataformas
+</li>
+<li>CLI (Command Line Interface)
+</li>
+<li>Execução remota
+</li>
+<li>Similares: GoBot (http://gobot.io/) e Cylon (http://cylonjs.com/).
+</li>
+</ul>
+<h4>Arduino Due:</h4>
+<ul>
+<li>36g
+</li>
+<li>500 Kb
+</li>
+<li>3.3v
+</li>
+<li>USB Serial
+</li>
+<li>mruby-arduino (https://github.com/kyab/mruby-arduino)
+</li>
+<li>Raspberry Pi:
+</li>
+<li>$ 25
+</li>
+<li>ARM II 700 Mhz
+</li>
+<li>Ruby MRI
+</li>
+<li>256 Mb (A/A+)
+</li>
+<li>Serial/Ethernet/USB
+</li>
+<li>Possível usar MRuby direto ao invés de Linux
+</li>
+</ul>
+<h4>Pebble:</h4>
+<p><a href="https://pebble.com/">https://pebble.com/</a></p>
+<ul>
+<li>Smartwatch
+</li>
+<li>Somente bluetooth
+</li>
+<li>FreeRTOS (Free firmware)
+</li>
+<li>42g
+</li>
+<li>$ 200
+</li>
+<li>7 dias de bateria
+</li>
+<li>Cortex M4 100 Mhz
+</li>
+</ul>
+<h4>Desenvolvimento de software para embarcados:</h4>
+<p>Além dos princípios SOLID;</p>
+<ul>
+<li>Logging
+</li>
+<li>Remote Logging
+</li>
+<li>No file and memory saving
+</li>
+<li>Avoid File Extraction
+</li>
+<li><p>Testing</p>
+<ul>
+<li><a href="https://github.com/iij/mruby-mtest">https://github.com/iij/mruby-mtest</a>
+</li>
+<li><a href="https://github.com/iij/mruby-mock">https://github.com/iij/mruby-mock</a>
+</li>
+</ul>
+</li>
+<li>Isolation/Runtime
+</li>
+<li>mirb
+</li>
+<li>Env/Deployment
+</li>
+</ul>
+<h4>Fluxo de desenvolvimento</h4>
+<p>Development.c -&gt; Generate.o -&gt; Sign -&gt; Physically upload -&gt; Test -&gt; Massification -&gt; Customer Feedback -&gt; Repeat</p>
+<p>Cloudwalk IO/Around the World - https://docs.cloudwalk.io/pt-BR/introduction
+Atualização de código
+I/O
+Tests
+Possível fazer espécie de continuous delivery para embarcados e quebra de paradigmas para desenvolvimento de embarcados.</p>
+<h4>Da Funk</h4>
+<p>Walk Framework API (https://github.com/cloudwalkio/da_funk)</p>
+<ul>
+<li>API for dev
+</li>
+<li>Notifications (Serf)
+</li>
+<li>GPRS, WiFi, Ethernet
+</li>
+<li>Device IoT
+</li>
+<li>Go (CGo) + MRuby
+</li>
+<li>MRuby, compilar código Go via CLI
+</li>
+</ul>
+<h2>Ruby na Aviação: Construindo aviônicos em Ruby e lidando com suas restrições</h2>
+<h3>Eduardo Mourão - <a href="https://twitter.com/eduardordm">@eduardordm</a></h3>
+<ul>
+<li><a href="https://github.com/eduardordm/enginevib">Fontes</a>
+</li>
+<li><a href="https://twitter.com/eduardordm/status/641296597985267712">Vídeo</a>
+</li>
+<li>Slides: Não encontrei
+</li>
+</ul>
+<p>Palestra mostrando como é trabalhar com Ruby no ramo da aviação.</p>
+<p>No ramo comercial é utilizado waterfall (DO-178), dogfood. Já no ramo militar é utilizado Agile/Scrum (BASP), dogfood gourmet :P</p>
+<p>Um monte de certificações.</p>
+<ul>
+<li>Desenvolvimento utilizando ADA
+</li>
+<li>Considerado estável
+</li>
+<li>Bug que obriga ser rebootado a cada 248 dias por conta do i++ Loop of Death
+</li>
+<li>http://www.engadget.com/2015/05/01/boeing-787-dreamliner-software-bug/
+</li>
+<li>https://twitter.com/bengoldacre/status/594089242319552512
+</li>
+</ul>
+<h4>Por que Ruby?</h4>
+<ul>
+<li>Real time
+</li>
+<li>Robustez
+</li>
+<li>Rastreabilidade
+</li>
+<li>DTrace (http://crypt.codemancers.com/posts/2013-04-16-profile-ruby-apps-dtrace-part1/)
+</li>
+<li>PMAP
+</li>
+<li>Conformidade
+</li>
+<li>Estrutura
+</li>
+<li>Soft ticker (RTOS)
+</li>
+<li>Controller Sensor Scheduler Output
+</li>
+<li>Uso de CPU não pode ultrapassar 0.2%, não tem cooler.
+</li>
+</ul>
+<p>Ticker -&gt; não pode passar do deadline (30ms)</p>
+<p>Caso precise desligar motor a jato, verificar vibrações :P</p>
+<p>Medição de Memory Leak</p>
+<h4>Rastreabilidade</h4>
+<ul>
+<li>DTrace
+</li>
+<li>syscalls
+</li>
+<li>object-create
+</li>
+<li>array-create
+</li>
+<li>hash-create
+</li>
+<li>[c]method-entry
+</li>
+<li>I/O é difícil
+</li>
+<li>Simplicidade &gt; Legibilidade
+</li>
+<li>Profilling
+</li>
+</ul>
+<p>Introspecção altera o estado do programa, erros de alocação e perda de origem (qual .rb).</p>
+<p><em>Testes com Rubocop:</em> https://github.com/bbatsov/rubocop
+Bikeshedding self-service</p>
+<h2>fpm-cookery: package binaries without pain</h2>
+<h3>Marcelo Correia - <a href="https://twitter.com/salizzar">@salizzar</a></h3>
+<ul>
+<li><a href="https://speakerdeck.com/salizzar/fpm-cookery-package-artefacts-without-pain">Slides</a>
+</li>
+</ul>
+<p>Palestra com intuito de mostrar uma abstração para empacotamento cross platform.</p>
+<ul>
+<li>Chef etc
+</li>
+<li>Best way to deploy
+</li>
+<li>Tarball
+</li>
+<li>FTP/SSH
+</li>
+</ul>
+<h4>Gerações</h4>
+<ul>
+<li><p>CFEngine (http://cfengine.com/)</p>
+</li>
+<li><p>Chef, Puppet</p>
+</li>
+<li><p>Ansible, SaltStack (http://saltstack.com/)</p>
+</li>
+<li><p>Fácil rollback</p>
+</li>
+<li><p>Pode se tornar um pesadelo de é necessário compilar algo</p>
+</li>
+<li><p>Não deixar gcc instalado no servidor</p>
+</li>
+<li><p>Tanto Debian quanto CentOS/RedHat possuem docs hard com alta curva de aprendizado</p>
+</li>
+</ul>
+<h4>FPM-cookery</h4>
+<p>https://github.com/bernd/fpm-cookery</p>
+<p>Desenvolvido Bernd Ahlers (https://github.com/bernd) trabalha como desenvolvedor no Graylog (https://www.graylog.org/).</p>
+<p>Uso bem simples, basicamente definir uma classe herdando de FPM::Cookery::Recipe e implementar <code class="inline">#build</code> e <code class="inline">#install</code>.</p>
+<h5>Com fpm-cookery é possível</h5>
+<ul>
+<li>Baixar tarball
+</li>
+<li>Baixar e compilar do source
+</li>
+<li>Resolver build de dependência
+</li>
+<li>Exportar para .rpm, .deb, .dmi, etc
+</li>
+<li>Usar helpers
+</li>
+</ul>
+<h4>Gordon</h4>
+<p>https://github.com/salizzar/gordon</p>
+<ul>
+<li>Agnostic packaging integra o fpm-cookery com foreman.
+</li>
+<li>Em beta
+</li>
+<li>Immutable infrastructure
+</li>
+<li><p>ToDo:</p>
+<ul>
+<li>inittab
+</li>
+<li>upstart
+</li>
+<li>supervisord
+</li>
+</ul>
+</li>
+<li><p>Supported languages:</p>
+<ul>
+<li>Ruby
+</li>
+<li>Java
+</li>
+</ul>
+</li>
+<li>Empacotamento de n projetos com uma única receita
+</li>
+</ul>
+<h2>Evolução e futuro do uso de paradigmas no JavaScript</h2>
+<h3>Jean Emer - <a href="https://twitter.com/jcemer">@jcemer</a></h3>
+<ul>
+<li><a href="http://jcemer.com/">Blog</a>
+</li>
+<li><a href="http://www.slideshare.net/jeancarloemer/evoluo-e-futuro-do-uso-de-paradigmas-no-javascript">Slides</a>
+</li>
+</ul>
+<p>Abordagem dos paradigmas trazidos pelo Backbone.js, Angular e React.</p>
+<h4>Javascript</h4>
+<ul>
+<li>Permite programar de forma funcional por conta da característica FCF (first-class functions), permitindo passar funções como parâmetro para outras funções.
+</li>
+<li>Usar Underscore (http://underscorejs.org/) como uma lib funcional
+</li>
+<li>EcmaScript 5.1
+</li>
+<li>map
+</li>
+<li>reduce
+</li>
+<li>every
+</li>
+<li>find
+</li>
+<li>includes
+</li>
+<li>Funcional:
+</li>
+<li>Funções puras
+</li>
+<li>Ausência de estado compartilhado
+</li>
+<li>Não geram efeito colateral
+</li>
+<li>Foco em compor funções
+</li>
+<li>Trampolines (https://taylodl.wordpress.com/2013/06/07/functional-javascript-tail-call-optimization-and-trampolines/e http://raganwald.com/2013/03/28/trampolines-in-javascript.html)
+</li>
+</ul>
+<p>JS não é uma linguagem funcional, mas tem características de.
+“Programação funcional é sobre valores e suas funções”</p>
+<ul>
+<li><p>Promises resultado de uma operação assíncrona.</p>
+</li>
+<li><p>Backbone-slide http://georgeosddev.github.io/backbone-slide.js/</p>
+</li>
+<li><p>render só quando necessário</p>
+</li>
+<li><p>Criar renders específicos</p>
+</li>
+<li><p>Um dos problemas dessas libs é que eles abusam muito de render e mudar o DOM com tamanha frequência é ruim para o navegador</p>
+</li>
+</ul>
+<h4>React.JS</h4>
+<p>https://facebook.github.io/react/</p>
+<ul>
+<li>Evita reescrever o DOM desnecessariamente
+</li>
+<li>Componentes recebem propriedades de ancestrais
+</li>
+<li>React marca como dirty e faz rerender somente quando necessário
+</li>
+<li>VirtualDOM
+</li>
+<li>Guarda as alterações e evita aplicar desnecessariamente
+</li>
+<li>EventStream
+</li>
+<li>Garante debounce dos requests
+</li>
+<li>Transformar request em uma promise
+</li>
+</ul>
+<h4>Event Stream</h4>
+<ul>
+<li>Garante debounce dos requests
+</li>
+<li>Transformar request em uma promise
+</li>
+<li>Functional Reactive Programming (https://www.manning.com/books/functional-reactive-programming)
+</li>
+<li>BaconJS (https://baconjs.github.io/)
+</li>
+</ul>
+<h2>Interfaces ricas com Rails e React.JS</h2>
+<h3>Rodrigo Urubatan - <a href="https://twitter.com/urubatan">@urubatan</a></h3>
+<ul>
+<li><a href="http://www.slideshare.net/urubatan/interfaces-ricas-com-rails-e-reactjs-rubyconf-2015">Slides</a>
+</li>
+</ul>
+<p>Palestra encheu bastante, com muitos interessados em React.JS.
+O blog mais feio do mundo, feito em Rails + React.JS em um SPA (single page app).</p>
+<p>Usando a gem <code class="inline">backbone-on-rails</code>  e <code class="inline">react-rails</code>.</p>
+<p>A gem <code class="inline">react-rails</code> (https://github.com/reactjs/react-rails) integra automaticamente com o asset pipeline do Rails.</p>
+<h4>Componentes</h4>
+<ul>
+<li>Extensão .js.jsx automaticamente compilado pelo asset pipeline.
+</li>
+<li>View com apenas &lt;%= react_component. … %&gt;
+</li>
+<li>Todos os controllers retornam collections em JSON
+</li>
+<li>Roteamento integrado para navegação assíncrona, via Backbone.router
+</li>
+<li>Verificar se é possível utilizar um JST para templates do React.JS, pois os templates são transformados em objetos pelo React
+</li>
+</ul>
+<p>O código que foi gerado é ruim para rankeamento no SEO. Mesmo com plugins, o conteúdo não é apresentado de forma semântica.</p>
+<p>React Router (https://github.com/rackt/react-router), suporta a sintaxa do ECMAScript 6 (com Gulp).</p>
+<p>Flux (https://github.com/facebook/flux), arquitetura para construir interface de usuário.</p>
+<h2>Como Trailblazer e Rails Engines podem salvar sua aplicação Rails monolítica</h2>
+<h3>Celso Fernandes - <a href="https://twitter.com/celsovjf">@celsovjf</a></h3>
+<ul>
+<li><a href="https://speakerdeck.com/fernandes/how-trailblazer-and-rails-engines-can-save-your-rails-monolith-application">Slides</a>
+</li>
+</ul>
+<p>Tópicos:</p>
+<ul>
+<li><p>Contract Pattern</p>
+</li>
+<li><p>Representer</p>
+</li>
+<li><p>Policy (que retorna boolean, ex.: current_user?)</p>
+</li>
+<li><p>Fugir do CRUD</p>
+</li>
+<li><p><code class="inline">#setup!(params)</code></p>
+</li>
+<li><p>setup params</p>
+</li>
+<li><p>build model</p>
+</li>
+<li><p>Comment::Create</p>
+</li>
+</ul>
+<h4>Operations em app monolítica</h4>
+<p>Micro Services</p>
+<p>Component Based Rails Architectures
+Post de exemplo: http://teotti.com/component-based-rails-architecture-primer/
+mount API::Engine
+Dispatcher Rails -&gt; Ember ou Rails views</p>
+<p>Clean Architecture: https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html</p>
+<p>TravisCI possui uma arquitetura de “componentes” (https://github.com/travis-ci/travis-listener).
+Exemplo de entrega de app Ember com Rails: RailsBlocks (https://github.com/railsblocks/railsblocks)</p>
+<h2>Ruby, Javascript e Elixir juntando forças para WebRTC</h2>
+<h4>Ben Langfeld - <a href="https://twitter.com/benlangfeld">@benlangfeld</a></h4>
+<ul>
+<li><a href="https://speakerdeck.com/benlangfeld/ruby-javascript-and-elixir-joining-forces-for-webrtc">Slides</a>
+</li>
+</ul>
+<p>Palestra sobre WebRTC (tecnologia que permite utilizar câmera e microfone direto no navegador com uma conexão praticamente Peer2Peer).</p>
+<p>WebRTC é utilizado pelo Google Hangouts e recentemente o Skype anunciou que também está indo para Web e extendendo essa solução para outras plataformas (como desktop e mobile).</p>
+<h4>Padrões para Interoperabilidade</h4>
+<ul>
+<li>Opius
+</li>
+<li>SDP
+</li>
+<li>ICE
+</li>
+<li>DTLS
+</li>
+</ul>
+<h4>Fluxo de conexão</h4>
+<p>Usuário A quer conectar com usuário B, para isso navegador manda para um intermediador HTTP informações sobre o suporte do navegador e esses dados são enviados para o navegador do usuário B que responde com as mesmas informações dele. Daí em diante ambos estabelecem uma conexão para trafegar essas informações.</p>
+<h4>Suporte</h4>
+<h5>Client-side</h5>
+<ul>
+<li>Chrome
+</li>
+<li>Firefox
+</li>
+<li>Opera
+</li>
+<li>IE &amp; Safari (através de plugins/addons)
+</li>
+</ul>
+<h5>Server-side</h5>
+<ul>
+<li>FreeSwitch(1.4+) - https://freeswitch.org/
+</li>
+<li>Asterisk (1++) - http://www.asterisk.org/
+</li>
+</ul>
+<h4>Sites com WebRTC</h4>
+<ul>
+<li>https://talkingstick.io/
+</li>
+<li>Modelo de comunicação em grupo
+</li>
+<li>Rails engine: gem <code class="inline">talking-stick</code>
+</li>
+<li>mount no router
+</li>
+<li>rake install
+</li>
+<li>e pronto :P
+</li>
+<li>https://cubeslam.com/
+</li>
+<li>Arkanoid com WebRTC
+</li>
+</ul>
+<h4>Por que adicionar Elixir na solução?</h4>
+<p>Lidar com concorrência e escalabilidade. Uso de SIP (Session Initiation Protocol - disponível no Elixir através da VM do Erlang: https://www.erlang-solutions.com/resources/collaterals/sip).</p>
+<p>WebRTC for JS - http://sipjs.com/
+MojoAuth to authenticate cross platform apps: https://github.com/mojolingo/mojo-auth</p>
+<h4>Takeaways:</h4>
+<ul>
+<li>Standards are not evil
+</li>
+</ul>
+<h2>Qualé dessa Programação Funcional?</h2>
+<h3>Andrew Rosa - <a href="https://twitter.com/_andrewhr">@_andrewhr</a></h3>
+<ul>
+<li><p><a href="https://speakerdeck.com/andrewhr/quale-dessa-programacao-funcional">Slides</a></p>
+</li>
+<li><p>Lambda calculus</p>
+</li>
+<li><p>Teoria das Categorias</p>
+</li>
+<li><p>Monads</p>
+</li>
+<li><p>Funções puras</p>
+</li>
+<li><p>Function as data</p>
+</li>
+<li><p>Conceito de closure do JS</p>
+</li>
+<li><p>Pipeline Operator Elixir similar ao Unix</p>
+</li>
+<li><p>Currying</p>
+</li>
+</ul>
+<h2>Outros slides de palestras que não assisti</h2>
+<ul>
+<li>Arquiteturas Comuns de apps Rails -  https://speakerdeck.com/plataformatec/arquiteturas-comuns-de-apps-rails-at-rubyconf-br-2015
+</li>
+<li>Qual é dessa Programação Funcional: https://speakerdeck.com/andrewhr/quale-dessa-programacao-funcional
+</li>
+<li>Learn from my mystakes - https://speakerdeck.com/flaviafortes/learn-from-my-mistakes
+</li>
+</ul>
+<h2>Anotações pessoais</h2>
+<ul>
+<li>Site da Sandi Metz: http://www.sandimetz.com/
+</li>
+<li>Practical Object-Oriented Design in Ruby (http://www.amazon.com/gp/product/0321721330/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321721330&amp;linkCode=as2&amp;tag=sandimetzcom-20&amp;linkId=MEEIA2TTJVD6F5DO)
+*
+</li>
+<li>The Cathedral &amp; The Bazaar (http://www.amazon.com/The-Cathedral-Bazaar-Accidental-Revolutionary/dp/0596001088)
+</li>
+<li>Conferir novos cursos do Coursera
+</li>
+<li>Conferir EDX  (https://www.edx.org/)
+</li>
+<li>Functional programming in Haskell (http://www.amazon.com/Haskell-Functional-Programming-International-Computer/dp/0201882957)
+</li>
+<li>Nand2Tetris (http://www.nand2tetris.org/)
+</li>
+<li>Hardware Software Interface (https://pt.coursera.org/course/hwswinterface)
+</li>
+<li>Cloud Computing Coursera (https://pt.coursera.org/course/cloudcomputing)
+</li>
+<li>Consistent Hashing (http://www.tom-e-white.com/2007/11/consistent-hashing.html)
+</li>
+<li>RingPop (https://github.com/uber/ringpop-node)
+</li>
+<li>Serf (http://www.slideshare.net/CotapEng/tech-talk-service-discovery-with-serf)
+</li>
+<li>Big O (https://pt.khanacademy.org/computing/computer-science/algorithms/asymptotic-notation/a/big-o-notation)
+</li>
+<li>Ordem de Grandeza
+</li>
+<li>Sinais digitais - Eng. Eletrica
+</li>
+<li>Sensor com filtro de ruído
+</li>
+<li>Debian + Systemd
+</li>
+<li>Currying in JS
+</li>
+<li>Promise Pattern - https://www.promisejs.org/patterns/
+</li>
+<li>Monad - https://en.wikipedia.org/wiki/Monad_(functional_programming)
+</li>
+<li>Contract Pattern (http://hillside.net/plop/plop97/Proceedings/dechamplain.pdf)
+</li>
+<li>Component Based Architecture (http://teotti.com/component-based-rails-architecture-primer/)
+</li>
+<li>EmberJS - http://emberjs.com/
+</li>
+</ul>
+<h2>Fotos da RubyConf</h2>
+<ul>
+<li><a href="https://www.facebook.com/media/set/?set=a.963241117052195.1073741866.206944852681829&amp;type=3">Facebook</a>
+</li>
+</ul>
+
+
+
+  <h3>Tags</h3>
+
+  <ul>
+    
+      <li><a href="/tags/ruby">ruby</a></li>
+    
+  </ul>
+
+
+      </main>
+
+      <hr />
+
+      <footer>
+        
+        <p>
+          Copyright &copy; 2019 <a href="https://github.com/wevtimoteo">Weverton Timoteo</a>
+
+          <span class="engine-credits">This website was generated by <a href="https://github.com/Dalgona/Serum">Serum</a></span>
+        </p>
+      </footer>
+    </div>
+    <script src="/assets/js/prism.js"></script>
+  </body>
+</html>
+<script>
+const ws_url = "ws://" + location.host + "/serum_live_reloader";
+var ws;
+
+connect();
+
+function connect() {
+  ws = new WebSocket(ws_url);
+  ws.onmessage = onMessage;
+  ws.onclose = onClose;
+}
+
+function onMessage(e) {
+  if (e.data === "reload") {
+    location.reload();
+  }
+}
+
+function onClose(e) {
+  console.warn("WebSocket disconnected from server. Reconnecting in 10 seconds.");
+  setTimeout(connect, 10000)
+}
+</script>
