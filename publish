@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -e
+
+mix serum.build --output output/
+ghp-import -b master output/
+git push origin master

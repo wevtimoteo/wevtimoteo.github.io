@@ -24,3 +24,6 @@ wevtimoteo_github_io-*.tar
 
 # The default directory which Serum builds the website into.
 /site/
+
+# Output directory
+output/
