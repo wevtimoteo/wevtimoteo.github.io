@@ -1,6 +1,6 @@
 # wevtimoteo's Personal Blog
 
-Personal blog that uses [Serum](https://dalgona.github.io/Serum) blog engine written in [Elixir](https://elixir-lang.org/).
+[Personal blog](https://wevtimoteo.github.io) that uses [Serum](https://dalgona.github.io/Serum) blog engine written in [Elixir](https://elixir-lang.org/).
 
 ## Develop
 
@@ -11,7 +11,7 @@ mix serum.server
 
 Then access [http://localhost:8080](http://localhost:8080)
 
-To quit, instead of press `Ctrl-c`, prefer to type `quit`
+To quit, instead of pressing `Ctrl-c`, prefer to type `quit`
 
 ## Publish
 
