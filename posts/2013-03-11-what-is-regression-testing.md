@@ -6,11 +6,11 @@ tags: development, testing, software, regression
 
 Há um tempo já me pego lendo e ouvindo esse termo e nunca tinha entendido exatamente quais eram os momentos que eu deveria fazê-lo, então aproveitei para fazer um review completo sobre 'O que é Teste de Regressão?'.
 
-###Qual o objetivo do teste de software?
+### Qual o objetivo do teste de software?
 
 > Identificar suas falhas para que a correção seja feita antes da entrega do produto ao usuário final.
 
-###Como um teste de regressão surge?
+### Como um teste de regressão surge?
 
 > Um componente novo ou modificado pode falhar quando usado com componentes inalterados, causando defeito
 > nos componentes inalterados pela geração de efeitos colaterais ou pelas características de interação.
@@ -19,14 +19,14 @@ Quando isso ocorre, diz-se que o sisteme sobre testes regrediu, por isso esses t
 
 Em poucas palavras, você quebrou o teste de uma outra funcionalidade por conta dessa nova _feature_ ou _correção de bug_.
 
-###Quando um teste de regressão é utilizado?
+### Quando um teste de regressão é utilizado?
 
 > * durante o desenvolvimento iterativo
 > * depois da depuração
 > * no primeiro passo de uma integração
 > * na manutenção de software
 
-####E dentro do escopo de Orientação a Objetos?
+#### E dentro do escopo de Orientação a Objetos?
 
 > * quando uma subclasse é desenvolvida
 > * quando uma super-classe é alterada
@@ -36,8 +36,7 @@ Em poucas palavras, você quebrou o teste de uma outra funcionalidade por conta 
 
 Isso é apenas um resumo, todas informações que citei podem ser consultadas com maiores detalhes nos links abaixo.
 
-
-###Fontes:
+### Fontes:
 
 * [Slideshare @csilvas - Testes de regressão automatizados](http://www.slideshare.net/csilvas/testes-de-regresso-automatizados)
 * [Teste Funcional e Regressão](http://www.testar.me/pages/testar_me_teste_funcional_regressao.html)
