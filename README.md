@@ -1,5 +1,7 @@
 # wevtimoteo's Personal Blog
 
+[![Ebert](https://ebertapp.io/github/wevtimoteo/wevtimoteo.github.io.svg)](https://ebertapp.io/github/wevtimoteo/wevtimoteo.github.io)
+
 [Personal blog](https://wevtimoteo.github.io) that uses [Serum](https://dalgona.github.io/Serum) blog engine written in [Elixir](https://elixir-lang.org/).
 
 ## Contributing
