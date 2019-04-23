@@ -34,7 +34,13 @@ To quit, instead of pressing `Ctrl-c`, prefer to type `quit`
 
 ## Publish
 
-Use `./publish`, it will run:
+First you need to install `ghp-import`:
+
+```
+pip install ghp-import --user
+```
+
+Then you can use `./publish`, it will run:
 
 * `serum.build` task for `output` directory
 * [`ghp-import`](https://github.com/davisp/ghp-import) Python tool: that will export specified content in a given directory for a given branch
