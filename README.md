@@ -2,7 +2,26 @@
 
 [Personal blog](https://wevtimoteo.github.io) that uses [Serum](https://dalgona.github.io/Serum) blog engine written in [Elixir](https://elixir-lang.org/).
 
-## Develop
+## Contributing
+
+Clone using Elixir directory naming patterns:
+
+```
+git clone git@github.com:wevtimoteo/wevtimoteo.github.io.git wevtimoteo_github_io
+```
+
+### Install Elixir and Erlang using [`asdf`](https://github.com/asdf-vm/asdf):
+
+```
+asdf install
+```
+
+This will install proper versions described in `.tool-versions` file.
+
+
+### Serum Server
+
+Install dependencies and run Serum server:
 
 ```
 mix do deps.get, deps.compile
