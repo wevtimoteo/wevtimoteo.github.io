@@ -12,7 +12,7 @@ I've started working with Software Development in 2007 as a front-end developer 
 
 Since mid-of 2011 I've been working with Ruby and as I was advancing in my career path, I've been adding more and more tools to my toolkit such as iOS (Objective-c and Swift), Android (Java), Golang and Elixir (pairing with Ruby in my favorites list).
 
-I enjoy a lot of RPG games and one of my hobbies is to study functional programming, focusing on Elixir and Haskell.
+I enjoy playing RPG games and one of my hobbies is to study functional programming, focusing on Elixir and Haskell.
 
 * [LinkedIn](https://www.linkedin.com/in/wevtimoteo/)
 * [Twitter](https://twitter.com/wevtimoteo)
