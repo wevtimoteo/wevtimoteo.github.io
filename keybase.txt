@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/wevtimoteo
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://wevtimoteo.github.io
+  * I am wevtimoteo (https://keybase.io/wevtimoteo) on keybase.
+  * I have a public key ASCxVAq3Q_TDbyGbyaca2ZfGB9M1kFS-uZZhi0nxSEfIBQo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0120b1540ab743f4c36f219bc9a71ad997c607d3359054beb996618b49f14847c8050a",
+      "host": "keybase.io",
+      "kid": "0120b1540ab743f4c36f219bc9a71ad997c607d3359054beb996618b49f14847c8050a",
+      "uid": "bd10e847dfca43a7aa816a37e8271419",
+      "username": "wevtimoteo"
+    },
+    "merkle_root": {
+      "ctime": 1508247032,
+      "hash": "3c984715538c477de68cb63c05055e8b0ae1d59a87c5d2884eaf0e1189603469b01a3d9a067ade20fa58fcc0abe8e2c38db7c32eaa6d71e5e164f8ae985485af",
+      "hash_meta": "a90188db9c3497dc5c8b13e5a769dfabd09749a2b4838ee0b06375acc4554cea",
+      "seqno": 1590751
+    },
+    "service": {
+      "hostname": "wevtimoteo.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.34"
+  },
+  "ctime": 1508247078,
+  "expire_in": 504576000,
+  "prev": "89cf6fc84084e2ccb5a7e89cf47512cba7cd9e227a6e08ab72638745d6dbeee6",
+  "seqno": 21,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgsVQKt0P0w28hm8mnGtmXxgfTNZBUvrmWYYtJ8UhHyAUKp3BheWxvYWTFA097ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwYjE1NDBhYjc0M2Y0YzM2ZjIxOWJjOWE3MWFkOTk3YzYwN2QzMzU5MDU0YmViOTk2NjE4YjQ5ZjE0ODQ3YzgwNTBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwYjE1NDBhYjc0M2Y0YzM2ZjIxOWJjOWE3MWFkOTk3YzYwN2QzMzU5MDU0YmViOTk2NjE4YjQ5ZjE0ODQ3YzgwNTBhIiwidWlkIjoiYmQxMGU4NDdkZmNhNDNhN2FhODE2YTM3ZTgyNzE0MTkiLCJ1c2VybmFtZSI6IndldnRpbW90ZW8ifSwibWVya2xlX3Jvb3QiOnsiY3RpbWUiOjE1MDgyNDcwMzIsImhhc2giOiIzYzk4NDcxNTUzOGM0NzdkZTY4Y2I2M2MwNTA1NWU4YjBhZTFkNTlhODdjNWQyODg0ZWFmMGUxMTg5NjAzNDY5YjAxYTNkOWEwNjdhZGUyMGZhNThmY2MwYWJlOGUyYzM4ZGI3YzMyZWFhNmQ3MWU1ZTE2NGY4YWU5ODU0ODVhZiIsImhhc2hfbWV0YSI6ImE5MDE4OGRiOWMzNDk3ZGM1YzhiMTNlNWE3NjlkZmFiZDA5NzQ5YTJiNDgzOGVlMGIwNjM3NWFjYzQ1NTRjZWEiLCJzZXFubyI6MTU5MDc1MX0sInNlcnZpY2UiOnsiaG9zdG5hbWUiOiJ3ZXZ0aW1vdGVvLmdpdGh1Yi5pbyIsInByb3RvY29sIjoiaHR0cHM6In0sInR5cGUiOiJ3ZWJfc2VydmljZV9iaW5kaW5nIiwidmVyc2lvbiI6MX0sImNsaWVudCI6eyJuYW1lIjoia2V5YmFzZS5pbyBnbyBjbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjM0In0sImN0aW1lIjoxNTA4MjQ3MDc4LCJleHBpcmVfaW4iOjUwNDU3NjAwMCwicHJldiI6Ijg5Y2Y2ZmM4NDA4NGUyY2NiNWE3ZTg5Y2Y0NzUxMmNiYTdjZDllMjI3YTZlMDhhYjcyNjM4NzQ1ZDZkYmVlZTYiLCJzZXFubyI6MjEsInRhZyI6InNpZ25hdHVyZSJ9o3NpZ8RAcRjILdK+EozsoSfzn8X9QSSkWlGcNQDK9rFPPvpf4D1YJK+BHjX3NWcyVN0fvQyskaTtO2R57FqG4GocEn+1AKhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIA30qCsx4G+LYSpoocslb7QVOa3LLfjRIKxeawohTsdao3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/wevtimoteo
+
+==================================================================
