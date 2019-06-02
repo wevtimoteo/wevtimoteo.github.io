@@ -19,7 +19,7 @@ defmodule WevtimoteoGithubIo.MixFile do
 
   defp deps do
     [
-      {:serum, "~> 0.12.0"}
+      {:serum, "~> 1.1"},
     ]
   end
 end
