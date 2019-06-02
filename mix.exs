@@ -20,6 +20,7 @@ defmodule WevtimoteoGithubIo.MixFile do
   defp deps do
     [
       {:serum, "~> 1.1"},
+      {:serum_theme_essence, "~> 1.0"}
     ]
   end
 end

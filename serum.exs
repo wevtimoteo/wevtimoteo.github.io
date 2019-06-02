@@ -11,6 +11,7 @@
   pagination: true,
   posts_per_page: 10,
   preview_length: 0,
+  theme: Serum.Themes.Essence,
   plugins: [
     {Serum.Plugins.LiveReloader, only: :dev}
   ]
