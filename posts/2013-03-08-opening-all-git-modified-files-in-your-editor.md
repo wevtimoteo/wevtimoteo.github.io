@@ -34,6 +34,6 @@ Isso fará com que todos os arquivos modificados sejam abertos no seu $EDITOR fa
 
 ``$EDITOR -p $(git status --short | awk '$1 ~ /^M$/ {print $2}')``
 
-Depois disso pensei em usar em alias. Mas usar `gitedit` seria muito chato, então fiz essa modificação no meu [dotfiles](https://github.com/wolcanus/dotfiles/commit/4321444655acae64b05ee02faad7f463df19aade) para poder utilizar um simples:
+Depois disso pensei em usar em alias. Mas usar `gitedit` seria muito chato, então fiz essa modificação no meu [dotfiles](https://github.com/wevtimoteo/dotfiles/commit/4321444655acae64b05ee02faad7f463df19aade) para poder utilizar um simples:
 
 ``git edit``
