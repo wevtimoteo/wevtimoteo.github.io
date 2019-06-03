@@ -1,0 +1,73 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Migrating to Serum blog engine - wevtimoteo</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <header id="top">
+        <h1><a href="/">wevtimoteo</a></h1>
+        <p>kairos _ sharing _ tech _ learning _ kaizen _ path</p>
+      </header>
+      <nav>
+<ul>
+  <li><a href="/posts">Posts</a></li>
+  <li><a href="/about.html">About</a></li>
+</ul>
+</nav>
+      <hr>
+      <main><article class="post"><header><h1 id="migrating-to-serum-blog-engine">Migrating to Serum blog engine</h1><p>
+      Monday, 22 Apr 2019
+      
+        <span class="tags">
+          Tags:
+          
+            <a class="tag" href="/tags/blogging">blogging</a></span></p></header><div><p>Some years ago I’ve been involving myself into learning more about <a href="https://elixir-lang.org">Elixir</a> programing language and I’ve decided to use more tools in the same ecosystem, starting by my own blog engine.</p><p>I’ve started this blog using <a href="https://jekyllrb.com">Jekyll</a> which is built using my favorite programing language: <a href="https://www.ruby-lang.org">Ruby</a>.</p><p>Then I started exploring some Data Science content, which most of its tools are written using <a href="https://www.python.org">Python</a> (a cool language but not included in my favorite list 😜), so I’ve found <a href="https://blog.getpelican.com">Pelican</a>!</p><p>Pelican has a nice documentation and a <a href="https://github.com/getpelican/pelican-themes">lot of themes</a>, must-have features for developers such as code syntax highlighting and modular plugin system (with its own <a href="https://github.com/getpelican/pelican-plugins">plugins repo</a>).</p><p>So backing to Elixir, I’ve found this <a href="https://github.com/h4cc/awesome-elixir#static-page-generation">Awesome Elixir list</a>, containing <a href="https://dalgona.github.io/Serum">Serum</a>. Checking other tools, I’ve decided to give it a try, you’re reading a blog post written using it :)</p><h2 id="can-we-compare-each-one?">Can we compare each one?</h2><p>All of them are categorized as Static Site Generator. Jekyll and Pelican have a lot more features than Serum, no doubt about it.</p><p>I’ve picked Serum as my blog engine to follow its evolution and I plan to contribute developing some <a href="https://dalgona.github.io/Serum/docs/plugin.html">Plugins</a> for it.</p><p>If you want to take a look at some other engines, check this <a href="https://github.com/myles/awesome-static-generators#blogs">Awesome Static Generators list</a>.</p><p>Serum is well-documented and to start a new blog using it is simple:</p><pre><code class="">$ mix archive.install hex serum_new
+$ mix serum.new /path/to/project
+$ cd /path/to/project
+$ mix do deps.get, deps.compile</code></pre><p>That is it! Check <a href="https://dalgona.github.io/Serum/getting-started.html">Getting Started</a> in Serum docs for more details.</p><p>I plan to write some blog posts explaining how parsing templates differ in each language and provide some RSS feed URL for future posts :)</p></div></article></main>
+      <hr>
+      <footer>
+        
+<!--=====================================-->
+<!-- Override "includes/footer.html.eex" -->
+<!-- to customize your footer contents.  -->
+<!--=====================================-->
+
+        <p>
+          Powered by <a href="https://github.com/Dalgona/Serum">Serum</a> v1.1.0,
+          with <a href="https://github.com/Dalgona/serum-theme-essence">Essence</a> theme
+        </p>
+      </footer>
+    </div>
+    <script src="/assets/js/prism.js"></script>
+  </body>
+</html>
+<script>
+const ws_url = "ws://" + location.host + "/serum_live_reloader";
+var ws;
+
+connect();
+
+function connect() {
+  ws = new WebSocket(ws_url);
+  ws.onmessage = onMessage;
+  ws.onclose = onClose;
+}
+
+function onMessage(e) {
+  if (e.data === "reload") {
+    location.reload();
+  }
+}
+
+function onClose(e) {
+  console.warn("WebSocket disconnected from server. Reconnecting in 10 seconds.");
+  setTimeout(connect, 10000)
+}
+</script>
