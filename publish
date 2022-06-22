@@ -3,5 +3,5 @@ set -e
 
 mix serum.build --output output/
 cp -rf static/* output/
-ghp-import -b master output/
-git push origin master
+ghp-import -b main output/
+git push origin main
