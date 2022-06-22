@@ -3,7 +3,7 @@ title: About
 ---
 
 <p style="text-align: center">
-  <a href="https://www.gravatar.com/avatar/d13c31974bbf9f685b22769480a93602.jpg?s=500">
+  <a href="https://github.com/wevtimoteo">
     <img src="https://www.gravatar.com/avatar/d13c31974bbf9f685b22769480a93602.jpg?s=250" />
   </a>
 </p>
