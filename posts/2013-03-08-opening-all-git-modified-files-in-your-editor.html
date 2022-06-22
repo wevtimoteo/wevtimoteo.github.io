@@ -42,7 +42,7 @@
 # modified:   app/api/company.rb
 # modified:   app/helpers/authentication_helper.rb
 # modified:   config/boot.rb
-# modified:   config/initializers/app_config.rb</code></pre><p>Pensei: seria legal, automaticamente abrir esses arquivos no meu $EDITOR.</p><p>Um simples <code class="inline">git status --short</code> resolveria isso, adicionado ao awk e o próprio $EDITOR:</p><p><code class="inline">$EDITOR $(git status --short | awk &apos;$1 ~ /^M$/ {print $2}&apos;)</code></p><p>Isso fará com que todos os arquivos modificados sejam abertos no seu $EDITOR favorito. Se for <code class="inline">vim</code>, todos os arquivos serão abertos em buffers. Para abrir em uma abas:</p><p><code class="inline">$EDITOR -p $(git status --short | awk &apos;$1 ~ /^M$/ {print $2}&apos;)</code></p><p>Depois disso pensei em usar em alias. Mas usar <code class="inline">gitedit</code> seria muito chato, então fiz essa modificação no meu <a href="https://github.com/wevtimoteo/dotfiles/commit/4321444655acae64b05ee02faad7f463df19aade">dotfiles</a> para poder utilizar um simples:</p><p><code class="inline">git edit</code></p></div></article></main>
+# modified:   config/initializers/app_config.rb</code></pre><p>Pensei: seria legal, automaticamente abrir esses arquivos no meu $EDITOR.</p><p>Um simples <code class="inline">git status --short</code> resolveria isso, adicionado ao awk e o próprio $EDITOR:</p><p><code class="inline">$EDITOR $(git status --short | awk &#39;$1 ~ /^M$/ {print $2}&#39;)</code></p><p>Isso fará com que todos os arquivos modificados sejam abertos no seu $EDITOR favorito. Se for <code class="inline">vim</code>, todos os arquivos serão abertos em buffers. Para abrir em uma abas:</p><p><code class="inline">$EDITOR -p $(git status --short | awk &#39;$1 ~ /^M$/ {print $2}&#39;)</code></p><p>Depois disso pensei em usar em alias. Mas usar <code class="inline">gitedit</code> seria muito chato, então fiz essa modificação no meu <a href="https://github.com/wevtimoteo/dotfiles/commit/4321444655acae64b05ee02faad7f463df19aade">dotfiles</a> para poder utilizar um simples:</p><p><code class="inline">git edit</code></p></div></article></main>
       <hr>
       <footer>
         <a href="https://dev.to/wevtimoteo" style="float: right">
@@ -55,7 +55,7 @@
 <!--=====================================-->
 
         <p>
-          Powered by <a href="https://github.com/Dalgona/Serum">Serum</a> v1.1.0,
+          Powered by <a href="https://github.com/Dalgona/Serum">Serum</a> v1.5.1,
           with <a href="https://github.com/Dalgona/serum-theme-essence">Essence</a> theme
         </p>
       </footer>
