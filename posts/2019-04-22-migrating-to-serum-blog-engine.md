@@ -14,7 +14,7 @@ Pelican has a nice documentation and a [lot of themes](https://github.com/getpel
 
 So backing to Elixir, I've found this [Awesome Elixir list](https://github.com/h4cc/awesome-elixir#static-page-generation), containing [Serum](https://dalgona.github.io/Serum). Checking other tools, I've decided to give it a try, you're reading a blog post written using it :)
 
-## Can we compare each one?
+## Can we compare each other?
 
 All of them are categorized as Static Site Generator. Jekyll and Pelican have a lot more features than Serum, no doubt about it.
 
