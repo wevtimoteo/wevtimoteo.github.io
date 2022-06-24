@@ -1,0 +1,106 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>Mais de 10 coisas para fazer antes de solicitar revisão do seu Pull Request - wevtimoteo</title>
+
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <header id="top">
+        <h1><a href="/">wevtimoteo</a></h1>
+        <p>kairos _ sharing _ tech _ learning _ kaizen _ path</p>
+      </header>
+      <nav>
+<ul>
+  <li><a href="/posts">Posts</a></li>
+  <li><a href="/about.html">About</a></li>
+</ul>
+</nav>
+      <hr>
+      <main><article class="post"><header><h1 id="mais-de-10-coisas-para-fazer-antes-de-solicitar-revisão-do-seu-pull-request">Mais de 10 coisas para fazer antes de solicitar revisão do seu Pull Request</h1><p>
+      Wednesday, 22 Jun 2022
+      
+        <span class="tags">
+          Tags:
+          
+            <a class="tag" href="/tags/code-review">code-review</a></span></p></header><div><p><em>Publicado originalmente em inglês no blog da <a href="https://sourcelevel.io/blog/10-items-to-check-before-assigning-a-pull-request-to-someone-plus-a-bonus">SourceLevel.io</a>.</em></p><p>Se você está trabalhando em um time, abrir um Pull/Merge Request é muito comum. No entanto, você já pensou em abrir um Pull/Merge Request quando está trabalhando sozinho?</p><p>Isso pode parecer sem sentido, mas eu acho que é uma excelente prática! Você pode se beneficiar de diversas formas ao revisar seu próprio Pull/Merge Request.</p><p>É sempre bom contar com os colegas para revisar seu código e encontrar trechos que passaram batido por você ou seu pair, além de compartilhar conhecimento com você. Não importa se você trabalha sozinho ou com um time, eu recomendo seguir esse checklist:</p><h3 id="1.-utilize-o-branch-alvo-correto">1. Utilize o branch alvo correto</h3><p>Vamos começar pelo mais fácil e rápido: verifique se o branch alvo que seu PR vai ser mergeado, está correto.</p><p>Se você sempre se perde na hora de abrir o PR pela interface web no GitHub, eu recomendo dar uma olhada no <a href="https://github.com/cli/cli">GitHub CLI</a> ou no <a href="https://github.com/github/hub">Hub</a>.
+Ambos permitem você abrir o PR direto no seu terminal, especificando o branch base (que será o seu alvo):</p><pre><code class="bash">$ hub pull-request -b meu-branch-alvo</code></pre><p>Esse comando vai abrir o editor definido na variável ambiente <code class="inline">$EDITOR</code>, você só precisará definir o título do PR e a descrição.</p><p>Ou se preferir, utilizando <a href="https://github.com/cli/cli">a ferramenta mais recente do GitHub (GitHub CLI <code class="inline">gh</code>)</a>:</p><pre><code class="bash">$ gh pr create -b meu-branch-alvo</code></pre><p>Esse comando vai te perguntar direto no terminal quais são os metadados do PR.</p><h3 id="2.-mostre-seu-rascunho">2. Mostre seu rascunho</h3><p>Eu já vi diversas pessoas desenvolvedoras abrindo PRs apenas quando o trabalho está quase pronto (ou até só quando está pronto). Eu recomendo <a href="https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests#draft-pull-requests">abrir os PRs em <code class="inline">Draft</code></a> logo depois de fazer o primeiro commit. Isso permite acompanhar seu progresso e alimentar ferramentas de métricas de código (como a <a href="https://sourcelevel.io">SourceLevel</a>), além de obter feedback do seu time antes da sua solução estar pronta.</p><p>Quando for escrever uma descrição, faça uma pequena checklist para deixar explícito o quanto você avançou naquela solução. Eu gosto bastante dessa ideia porque ela deixa muito mais claro o que você precisa fazer como próximo passo e seus colegas também podem te apoiar caso já tenham feito algo parecido em um passo que esteja pendente.</p><p>Você também pode utilizar o <code class="inline">hub</code> para abrir PRs direto em Draft com a opção <code class="inline">-d</code>:</p><pre><code class="bash">$ hub pull-request -b meu-branch-alvo -d</code></pre><p>E no <code class="inline">gh</code>:</p><pre><code class="bash">$ gh pr create -b meu-branch-alvo -d</code></pre><h3 id="3.-vamos-falar-de-código!">3. Vamos falar de código!</h3><p>Vamos assumir que você abriu um PR em rascunho, mas e o código? O que você deve revisar antes de pedir para o seu time revisar?</p><p>Eu recomendo começar com os mais fáceis sempre:</p><ul><li>Erros de digitação
+</li><li>Notações <code class="inline">TODO</code> ou <code class="inline">NOTE</code></li><li>Comentários no código
+</li><li>Chamadas <code class="inline">print</code>/<code class="inline">puts</code></li><li>Linhas duplas em branco
+</li><li>Espaços em branco no final de linhas ou de arquivos
+</li></ul><p>Você pode configurar seu editor para evitar esse último item, procure por <a href="https://letmegooglethat.com/?q=remove+trailing+spaces+in+vim"><code class="inline">remove trailing spaces in &lt;seu editor favorito&gt;</code></a>. <strong>Acredite em mim:</strong> isso economiza muito tempo ao salvar um arquivo e já remover esses espaços automaticamente.</p><h3 id="4.-dê-nomes-apropriados">4. Dê nomes apropriados</h3><p>Algumas pessoas desenvolvedoras investem muito tempo nomeando módulos, classes, variáveis e assim por diante. Normalmente, eu começo com um nome que parece bom e no final do ciclo de desenvolvimento eu o reviso, sempre aparecem melhores opções. Então não se esqueça de revisitar seu código e nomeá-los devidamente.</p><p>Quando nomear as coisas, imagine que você é a “coisa” e se o nome que você escolheu corresponde com a semântica do que você está fazendo.</p><h3 id="5.-peça-ajuda-de-ferramentas">5. Peça ajuda de ferramentas</h3><p>Seus colegas de trabalho não estão disponíveis o tempo todo para você ou até se você trabalha sozinho, você deveria se beneficiar de <strong>Linters</strong>! Eles podem ser muito mais úteis que você imagina!</p><p>Linters são ferramentas que analisam seu código para identificar erros, warnings, convenções de estilo e questões de complexidade de código. Por exemplo, no <a href="https://www.ruby-lang.org/">Ruby</a>, existe o <a href="https://github.com/rubocop-hq/rubocop">Rubocop</a>; no <a href="https://elixir-lang.org/">Elixir</a>, existe o <a href="https://github.com/rrrene/credo">Credo</a>.</p><p>Usar linters é uma forma excelente de <a href="https://sourcelevel.io/blog/6-practices-to-use-linters-to-reduce-and-prevent-technical-debt">reduzir e prevenir o débito técnico na sua base de código</a>. Comece com algumas regras e vá adicionando conforme sentir necessidade no arquivo de configuração do linter.</p><p>No entanto, sempre lembre de discutir essas regras com seu time antes de se comprometer com elas. Evite falar sobre regras de linters em um Pull Request (a não ser que seja um PR dedicado a isso). <strong>Mova essa discussão</strong> para um lugar (como as issues) onde você possa coletar feedback de mais membros do time e garantir que todos estão na mesma página e estão de acordo com aquela regra.</p><h3 id="6.-remova-o-ruído">6. Remova o ruído</h3><p>Quando estamos desenvolvendo, é comum encontrar algum código para refatorar, fazer aquele trabalho de jardinagem, utilizar o estilo de codificação da base de código, ou remover aquele parênteses desnecessário. Para esses casos, eu recomendo evitar fazer essa mudança se estiver fora do contexto do que você está modificando.</p><p>Eu sei que muitas vezes é difícil de evitar corrigir ou ajustar (já que aquele código está logo ali), mas tenha em mente que você sempre pode abrir um Pull Request separado para essas mudanças. E nele, explicar as razões e prover informações adicionais porque aquela mudança é necessária.</p><p>Por que fazer isso? Porque ao adicionar código não-relacionado vai aumentar a complexidade para a pessoa revisora. Mais informações fazem com que o processo seja mais detalhado e <strong>menos código não-relacionado</strong> faz com que o processo de revisão seja mais preciso e mais focado no contexto exigido.</p><p>Se você encontrar alguma modificação que fez durante o desenvolvimento e não queria descartar na hora de commitar, você deveria dar uma olhada no comando <a href="https://git-scm.com/docs/git-stash"><code class="inline">git stash</code></a>.</p><h3 id="7.-traga-apenas-o-necessário-do-banco-de-dados">7. Traga apenas o necessário do banco de dados</h3><p>Se suas mudanças envolvem trazer dados do banco de dados, você deveria especificar apenas as colunas que você precisa. Pode ser caro sempre trazer dados que são irrelevantes para o seu uso do banco de dados. Tenha em mente que isso vai obrigar utilizar mais recursos na linguagem de programação utilizada também, como maior retenção de objetos/estruturas de dados, aumentando o consumo de memória da aplicação.</p><h3 id="8.-entenda-“mergeabilidade”">8. Entenda “Mergeabilidade”</h3><p>Alguns PRs são mais fáceis de mergear (integrar ao branch alvo) que os outros. Como definir se um PR é aceitável para ser mergeado?</p><p>Vários times obrigam que os Pull Requests passem um conjuntos de verificações para saber se eles estão elegíveis para serem mergeados. Isso é interessante para aumentar a confiabilidade da mudança que está sendo integrada e que não vai quebrar no branch alvo.</p><p>As verificações normalmente incluem:</p><ul><li>Branches protegidos
+</li><li>Obrigar revisão de código
+</li><li>Assinatura de commits via chaves GPG
+</li><li>Histórico linear de alterações
+</li><li>Incluir status checks específicos, como build de testes
+</li></ul><p>O último item poderia ser obrigatório: o commit status checks indicam se a ferramenta integrada (como o GitHub Actions ou alguma revisão de código automatizada) passou a cada push . Você pode <a href="https://docs.github.com/pt/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule">configurar seu repositório para obrigar cada um deles</a>. Assim apenas push “verdes” estão bons para serem integrados no branch alvo!</p><h2 id="terminou?">Terminou?</h2><p>Bom trabalho se você chegou até aqui no seu checklist e seguiu todas as instruções. Agora é hora dos últimos e não menos importantes: melhorias nos metadados do Pull Request.</p><h3 id="9.-passe-a-mensagem-correta">9. Passe a mensagem correta</h3><p>Tudo que é essencial deve ir para descrição do seu PR. Pense que essa descrição deve guiar os revisores sobre o contexto das mudanças, dê o seu melhor para explicar porquê elas estão lá.</p><p>Você deve verificar todos os itens se você abriu seu PR como <code class="inline">Draft</code>. Considere até <a href="https://docs.github.com/pt/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository">transformar em um modelo para futuros Pull Requests</a>. Se você precisa de um modelo bem simples, recomendo utilizar o da <a href="https://github.com/sourcelevel/guidelines/blob/main/.github/pull_request_template.md">SourceLevel</a>.</p><p>Algumas outras coisas interessantes que você pode incluir na descrição do PR:</p><ul><li>Instruções sobre “Como testar” aquelas mudanças
+</li><li>O que não é parte daquele PR (qualquer coisa não relacionada com o trabalho que você gostaria que todos soubessem)
+</li><li>O que pode ser melhorado no futuro (considere até criar uma issue e referenciá-la no seu PR)
+</li><li>Documentações e referências (lembre-se que PR também é documentação e pode ser muito útil para você e seu time no futuro)
+</li><li>Lista de referências para issues existentes ou outros PRs (caso você queira enriquecer ainda mais o contexto e deixar a base de PRs e issues cada vez mais rica com informações)
+</li><li><a href="https://docs.github.com/pt/get-started/writing-on-github/working-with-advanced-formatting/creating-a-permanent-link-to-a-code-snippet">Snippets de código de outros branches</a></li></ul><h3 id="10.-adicione-screenshots">10. Adicione screenshots</h3><p>Screenshots são ótimas para mostrar como aquela mudança afeta o visual de uma página ou componente. Se você possui mais de uma screenshot, considere utilizar uma seção com a tag <code class="inline">&lt;details&gt;</code>:</p><pre><code class="ruby">&lt;details&gt;
+&lt;summary&gt;Screenshot oculta&lt;/summary&gt;
+
+![alt text](https://example.com/image.png)
+&lt;/details&gt;</code></pre><p>Isso vai fazer com que a imagem fique escondida dessa maneira:</p><img src="/media/images/pull-request-screenshot.png" alt="Exemplo de imagem dentro da tag details"/><p>Sinta-se à vontade para usar a tag <code class="inline">&lt;details&gt;</code> para um GIF ou um vídeo.</p><h3 id="11.-encontre-seu-pr-no-futuro">11. Encontre seu PR no futuro</h3><p>Pessoas tendem a esquecer que elas podem consultar o histórico de PRs para tirar dúvidas sobre como aquela funcionalidade ou bugfix foi construída e porquê. Se você nunca olha um PR antigo em uma hora dessas, <strong>talvez você esteja perdendo informações úteis</strong>.</p><p>Já teve algum problema encontrando um PR específico? Então utilize <code class="inline">labels</code> melhores para classificá-los. Precisa de sugestão de algumas? Tente essas:</p><ul><li>dependency
+</li><li>documentation
+</li><li>expedite
+</li><li>feature
+</li><li>good first patch
+</li><li>ready for test, in test, test done
+</li><li>security
+</li><li>tech debt
+</li><li>unplanned
+</li></ul><p>Use sua criatividade para identificar labels atrativas que podem ajudar você e seu time encontrar issues e PRs com elas.</p><h3 id="12.-utilize-comentários-inline-nas-suas-próprias-mudanças">12. Utilize comentários inline nas suas próprias mudanças</h3><p>Comente na linha ou trecho de código qualquer fato interessante que você sinta necessidade de compartilhar. Por exemplo, você pode mencionar sobre aquele método da API da linguagem de programação que você acabou de descobrir, isso pode fazer várias discussões interessantes surgirem, talvez até sugestões melhores.</p><h2 id="é-isso-aí!">É isso aí!</h2><p>Parabéns 🎉! Fez alguma mudança no PR desde que você tinha considerado ele como “Pronto” depois desse checklist?</p><p>Agora é hora de fazer um <strong>rebase</strong> e garantir que está tudo atualizado e então, finalmente, <strong>pronto para pedir revisão do seu time</strong>!</p><p>Obrigado pela leitura ;)</p><p>Você aprendeu algo novo revisando o seu próprio código? <a href="https://www.twitter.com/wevtimoteo">Compartilhe comigo</a>!</p></div></article></main>
+      <hr>
+      <footer>
+        <a href="https://dev.to/wevtimoteo" style="float: right">
+          <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Weverton Timoteo's DEV Profile" height="30" width="30">
+        </a>
+        
+<!--=====================================-->
+<!-- Override "includes/footer.html.eex" -->
+<!-- to customize your footer contents.  -->
+<!--=====================================-->
+
+        <p>
+          Powered by <a href="https://github.com/Dalgona/Serum">Serum</a> v1.5.1,
+          with <a href="https://github.com/Dalgona/serum-theme-essence">Essence</a> theme
+        </p>
+      </footer>
+    </div>
+    <script src="/assets/js/prism.js"></script>
+  </body>
+</html>
+<script>
+const ws_url = "ws://" + location.host + "/serum_live_reloader";
+var ws;
+
+connect();
+
+function connect() {
+  ws = new WebSocket(ws_url);
+  ws.onmessage = onMessage;
+  ws.onclose = onClose;
+}
+
+function onMessage(e) {
+  if (e.data === "reload") {
+    location.reload();
+  }
+}
+
+function onClose(e) {
+  console.warn("WebSocket disconnected from server. Reconnecting in 10 seconds.");
+  setTimeout(connect, 10000)
+}
+</script>
