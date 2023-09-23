@@ -1,7 +1,5 @@
 # wevtimoteo's Personal Blog
 
-[![Ebert](https://ebertapp.io/github/wevtimoteo/wevtimoteo.github.io.svg)](https://ebertapp.io/github/wevtimoteo/wevtimoteo.github.io)
-
 [Personal blog](https://wevtimoteo.github.io) that uses [Serum](https://dalgona.github.io/Serum) blog engine written in [Elixir](https://elixir-lang.org/).
 
 ## Contributing
@@ -19,7 +17,6 @@ asdf install
 ```
 
 This will install proper versions described in `.tool-versions` file.
-
 
 ### Serum Server
 
@@ -44,6 +41,6 @@ pip install ghp-import --user
 
 Then you can use `./publish`, it will run:
 
-* `serum.build` task for `output` directory
-* [`ghp-import`](https://github.com/davisp/ghp-import) Python tool: that will export specified content in a given directory for a given branch
-* `push` it to remote repo
+- `serum.build` task for `output` directory
+- [`ghp-import`](https://github.com/davisp/ghp-import) Python tool: that will export specified content in a given directory for a given branch
+- `push` it to remote repo
