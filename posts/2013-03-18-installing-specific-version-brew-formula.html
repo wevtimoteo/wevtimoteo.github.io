@@ -26,13 +26,7 @@
 </ul>
 </nav>
       <hr>
-      <main><article class="post"><header><h1 id="instalando-uma-versão-específica-de-uma-fórmula-no-homebrew">Instalando uma versão específica de uma fórmula no Homebrew</h1><p>
-      Monday, 18 Mar 2013
-      
-        <span class="tags">
-          Tags:
-          
-            <a class="tag" href="/tags/brew">brew</a><a class="tag" href="/tags/macosx">macosx</a></span></p></header><div><p>Fiquei brincando um pouco com os comandos do <code class="inline">brew</code> e surgiu uma dúvida: como instalar versões específicas no <a href="http://mxcl.github.com/homebrew/">Homebrew</a>?</p><h3 id="atualize">Atualize</h3><p>Antes de mais nada, atualize suas fórmulas com o seguinte comando:</p><p><code class="inline">brew update</code></p><h3 id="instalando-uma-versão-específica">Instalando uma versão específica</h3><p>Para listar as versões disponíveis para uma fórmula, utilize:</p><p><code class="inline">brew versions phantomjs</code></p><p>Você terá uma lista parecida com essa:</p><pre><code class="bash">1.8.1    git checkout 1a69283 /usr/local/Library/Formula/phantomjs.rb
+      <main><h1 id="instalando-uma-versão-específica-de-uma-fórmula-no-homebrew">Instalando uma versão específica de uma fórmula no Homebrew</h1><p>Posted on Monday, 18 Mar 2013 by Weverton Timoteo</p><p>Tags:</p><ul><li><a href="/tags/brew">brew</a></li><li><a href="/tags/macosx">macosx</a></li></ul><p>Fiquei brincando um pouco com os comandos do <code class="inline">brew</code> e surgiu uma dúvida: como instalar versões específicas no <a href="http://mxcl.github.com/homebrew/">Homebrew</a>?</p><h3 id="atualize">Atualize</h3><p>Antes de mais nada, atualize suas fórmulas com o seguinte comando:</p><p><code class="inline">brew update</code></p><h3 id="instalando-uma-versão-específica">Instalando uma versão específica</h3><p>Para listar as versões disponíveis para uma fórmula, utilize:</p><p><code class="inline">brew versions phantomjs</code></p><p>Você terá uma lista parecida com essa:</p><pre><code class="bash">1.8.1    git checkout 1a69283 /usr/local/Library/Formula/phantomjs.rb
 1.8.0    git checkout 7b4df06 /usr/local/Library/Formula/phantomjs.rb
 1.7.0    git checkout d37d922 /usr/local/Library/Formula/phantomjs.rb
 1.6.1    git checkout 6b8d25f /usr/local/Library/Formula/phantomjs.rb
@@ -57,7 +51,7 @@ https://github.com/mxcl/homebrew/commits/master/Library/Formula/phantomjs.rb</co
 Ou se preferir, você pode remover tudo de uma vez:</p><p><code class="inline">brew uninstall -f phantomjs</code></p><p>Se der <code class="inline">brew info phantomjs</code> verá que nenhuma fórmula está instalada:</p><pre><code class="">phantomjs: stable 1.8.2
 http://www.phantomjs.org/
 Not installed
-https://github.com/mxcl/homebrew/commits/master/Library/Formula/phantomjs.rb</code></pre></div></article></main>
+https://github.com/mxcl/homebrew/commits/master/Library/Formula/phantomjs.rb</code></pre></main>
       <hr>
       <footer>
         <a href="https://dev.to/wevtimoteo" style="float: right">

@@ -26,13 +26,7 @@
 </ul>
 </nav>
       <hr>
-      <main><article class="post"><header><h1 id="redirecionando-de-volta-no-rails">Redirecionando de volta no Rails</h1><p>
-      Wednesday, 15 May 2013
-      
-        <span class="tags">
-          Tags:
-          
-            <a class="tag" href="/tags/rails">rails</a><a class="tag" href="/tags/ruby">ruby</a></span></p></header><div><p>Queria só fazer um post rápido de um truque que eu não conhecia =P</p><p>O comando <code class="inline">redirect_to :back</code> faz exatamente o ele diz (óbvio): redireciona o usuário de volta para página que o mesmo estava.</p><p>Esse comando é similar ao <code class="inline">redirect_to request.env[&quot;HTTP_REFERER&quot;]</code>, por isso não se esqueça de setar o HTTP_REFERER no seu teste de controller.</p><p>Algo bacana desse redirect é que ele leva os <code class="inline">params</code> também, então se o usuário estava em página de busca cheia de filtros, nada será perdido.</p></div></article></main>
+      <main><h1 id="redirecionando-de-volta-no-rails">Redirecionando de volta no Rails</h1><p>Posted on Wednesday, 15 May 2013 by Weverton Timoteo</p><p>Tags:</p><ul><li><a href="/tags/rails">rails</a></li><li><a href="/tags/ruby">ruby</a></li></ul><p>Queria só fazer um post rápido de um truque que eu não conhecia =P</p><p>O comando <code class="inline">redirect_to :back</code> faz exatamente o ele diz (óbvio): redireciona o usuário de volta para página que o mesmo estava.</p><p>Esse comando é similar ao <code class="inline">redirect_to request.env[&quot;HTTP_REFERER&quot;]</code>, por isso não se esqueça de setar o HTTP_REFERER no seu teste de controller.</p><p>Algo bacana desse redirect é que ele leva os <code class="inline">params</code> também, então se o usuário estava em página de busca cheia de filtros, nada será perdido.</p></main>
       <hr>
       <footer>
         <a href="https://dev.to/wevtimoteo" style="float: right">
