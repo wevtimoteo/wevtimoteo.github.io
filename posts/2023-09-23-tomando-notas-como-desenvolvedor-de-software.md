@@ -7,7 +7,7 @@ tags: notes
 Me arrependo profundamente de não tomar notas mais cedo. As notas até existiam, mas geralmente eram coisas pontuais para executar uma tarefa ou algo interessante que encontrei que meses depois eram só anotações "sem utilidade".
 Fico pensando se eu tivesse um mapa de tudo que eu aprendi e experienciei na vida transcrito de uma maneira organizada que eu possa consumir para gerar novas ideias e, finalmente, eu tenho.
 
-Recentemente li o livro [Criando um Segundo Cérebro](https://amzn.to/3PMEizK) do Tiago Forte e me ajudou bastante a tirar essa ideia de organização perfeita e simplesmente começar a anotar. Meu processo de começar a tomar notas para valer se deu nas seguintes etapas:
+Recentemente li o livro [Criando um Segundo Cérebro](https://amzn.to/3PMEizK) do Tiago Forte e me ajudou bastante a tirar essa ideia de organização perfeita e simplesmente começar a anotar. Meu processo de tomar notas para valer se deu depois de resolver as seguintes dúvidas:
 
 - Qual melhor app/software para tomar notas?
 - O que anotar?
@@ -18,14 +18,14 @@ Só depois que "resolvi" esses pontos que senti que estava pronto para escrever 
 
 ## Qual o melhor app/software para tomar notas?
 
-Como tudo: depende. E depende para cada pessoa. Cada solução terão vantagens e desvantagens, antes precisei escrever o que era mais importante para mim para poder decidir:
+Como tudo: depende. E depende para cada pessoa. Cada solução terão vantagens e desvantagens, antes precisei escrever o que era mais importante para mim para poder decidir, eu queria:
 
 - Um app leve (não necessariamente nativo, um [electron](https://github.com/electron/electron) resolveria)
-- Suporte a Backlinks (lista onde a nota em questão foi citada)
+- Suporte a Backlinks (lista de menções da nota que estou visualizando)
 - Queria estrutura de pastas (para organização que eu estava pensando fazia sentido)
-- De graça
-- Os arquivos são meus (não estão em uma cloud ou requere alguma funcionalidade de exportação para acessá-los)
-- Possibilidade de estender e customizar (caso eu queira desenvolver um plugin para atender um fluxo específico meu)
+- De graça (não queria pagar para algo que iria manter para vida toda)
+- Os arquivos são meus (não estão em uma cloud privada ou requere alguma funcionalidade de exportação para arquivos para eu manipulá-los)
+- Possibilidade de estender e customizar (caso eu quisesse desenvolver um plugin para atender um fluxo específico meu)
 - Arquivos de anexos centralizados (não queria guardar em uma cloud à parte)
 - Não tinha necessidade de colaborar (editar a nota ao mesmo tempo que alguém)
 
@@ -61,14 +61,16 @@ Como tudo: depende. E depende para cada pessoa. Cada solução terão vantagens 
 
 ---
 
-Dentre esses acabei optando pelo Obsidian, inclusive esse blog post está sendo escrito nele. Gosto bastante de como é possível configurá-lo para ficar no fluxo de edição mais favorável ao que estou acostumado, inclusive com Vi keys para quem curte o editor [Vim](https://www.vim.org/) (quando digo editor Vim, já me refiro ao [Neovim](https://neovim.io/)).
+Dentre esses acabei optando pelo _Obsidian_, inclusive esse blog post está sendo escrito nele. Gosto bastante de como é possível configurá-lo para ficar no fluxo de edição mais favorável ao que estou acostumado, inclusive com Vi keys para quem curte o editor [Vim](https://www.vim.org/) (e para quem não conhece, vá direto para o [Neovim](https://neovim.io/) caso queira testar).
 
 ## O que anotar?
 
-Como você deve ter imaginado, isso não existe. O importante é:
+Como você deve ter imaginado, esse é um dos pontos críticos: o risco de anotar tudo que sua nota tem tanto ruído e detalhe que se torna irrelevante para ser consultada. Eu recomendaria:
 
+- algo que seja importante
 - anote de uma maneira que você entenda o contexto rapidamente
-- a nota tem que ter alguma utilidade para você: se anotar quantos PRs (Pull Requests) você abriu no dia é importante, é melhor usar a [SourceLevel](https://sourcelevel.io/) ao invés de ficar metrificando coisas manualmente.
+- a nota tem que ter alguma utilidade para você
+  - se anotar quantos PRs (Pull Requests) você abriu no dia é importante e tem alguma utilidade no futuro, anote! - mas é melhor usar a [SourceLevel](https://sourcelevel.io/) para isso :)
 
 Falando da rotina de uma pessoa desenvolvedora de software eu gosto de anotar:
 
@@ -80,17 +82,17 @@ Acho também interessante para reuniões de 1:1s ou de Performance, para saber o
 
 ### Sessão de Debugging
 
-Durante um debugging eu gosto de transcrever o problema que estou tendo e já não estou conseguindo resolver, como por exemplo, uma exception.
+Durante um debugging eu gosto de transcrever o problema que estou tendo e já não estou conseguindo resolver, como por exemplo, uma exception. Então sempre que eu tenho um problema, verifico primeiro no meu sistema de notas.
 
-Então sempre que eu tenho um problema, verifico primeiro no meu sistema de notas. Esses dias precisei adicionar uma variável ambiente em um cluster [Kubernetes](https://kubernetes.io/). Utilizando o `kubectl` eu não lembrava qual o comando para fazê-lo, mas bastou uma busca rápida no meu sistema de notas e ali estava um tutorial de como fazer isso (para quem ficou interessado o comando é `kubectl set env deployment/<seu-deployment> MY_ENV_CONFIG=<valor da config>`).
+Esses dias precisei adicionar uma variável ambiente em um cluster [Kubernetes](https://kubernetes.io/). Eu não lembrava qual subcomando do CLI `kubectl` deveria utilizar, mas bastou uma busca rápida no meu sistema de notas e ali estava um tutorial de como fazer isso. Para quem ficou interessado o comando é `kubectl set env deployment/<seu-deployment> MY_ENV_CONFIG=<valor da config>`.
 
-Esse tipo de coisa, não só cataloga os problemas que estou tendo, mas pode ajudar um colega de time quando tem algum problema parecido. Bastaria copiar o [Markdown](https://www.markdownguide.org/) e colar o conteúdo para a pessoa. Outro ponto interessante é que pode me levar a escrever um blog post de maneira muito rápida, só pegando partes das minhas notas.
+Esse tipo de coisa, não só cataloga os problemas que estou tendo, mas pode ajudar um colega de time quando passa por algo parecido. Bastaria copiar o [Markdown](https://www.markdownguide.org/) e colar o conteúdo para a pessoa. Outro ponto interessante é que fica fácil escrever um blog post, só pegando partes das minhas notas.
 
 ### Discovery/Aprendizado
 
-Comecei recentemente a estudar o [Pulumi](https://www.pulumi.com/) como alternativa ao [Terraform](https://www.terraform.io/), então fui detalhando tudo que descobri em poucos itens de forma resumida. Como por exemplo, formatos disponíveis para descrever a infraestrutura (NodeJS, Python, etc), precificação e como o modelo de créditos funciona.
+Comecei recentemente a estudar o [Pulumi](https://www.pulumi.com/) como alternativa ao [Terraform](https://www.terraform.io/), então fui detalhando tudo que descobri em poucos itens de forma resumida. Como, por exemplo, formatos disponíveis para descrever a infraestrutura (NodeJS, Python, etc), precificação e funcionamento do modelo de créditos.
 
-Esse tipo de nota me ajuda muito a ajudar também outras pessoas que estão nessa etapa de aprendizado e até para conversar em uma reunião sobre determinada ferramenta e ir levantando potenciais dúvidas para serem resolvidas.
+Esse tipo de nota me permite ajudar também outras pessoas que estão na etapa de aprendizado e até para conversar em uma reunião sobre determinada ferramenta e ir levantando potenciais dúvidas para serem resolvidas.
 
 ### Consumo de conteúdo
 
@@ -114,7 +116,7 @@ O Tiago Forte recomenda inclusive enumerar cada um deles para facilitar o mentio
 3. Recursos
 4. Arquivo
 
-Se você não tem uma organização em mente, recomendo fortemente ir por essa e depois deixar seu sistema de gestão de conhecimento pessoal tomar forma organicamente.
+Se você não tem uma organização em mente, recomendo fortemente utilizar essa e depois deixar seu sistema de gestão de conhecimento pessoal tomar forma organicamente e te direcionar para melhor estruturação.
 
 ## Como anotar rápido?
 
@@ -131,7 +133,7 @@ url: https://minha.receita/almoco
 
 Você pode customizar as propriedades da nota com o que o você achar relevante, eu tenho linkado notas existentes nas propriedades diretamente (de forma experimental).
 
-Depois de achar um formato para cada tipo de nota, você pode transformá-los em Templates, então assim que abrir a nota, você pode utilizar Cmd + T (no Obsidian) para selecionar qual template utilizar, inclusive é possível aplicar vários templates na mesma nota.
+Depois de achar um formato para cada tipo de nota, você pode transformá-los em **Templates**, então assim que abrir a nota, você pode utilizar Cmd + T (no Obsidian) para selecionar qual template utilizar, inclusive é possível aplicar vários templates na mesma nota.
 
 ---
 
