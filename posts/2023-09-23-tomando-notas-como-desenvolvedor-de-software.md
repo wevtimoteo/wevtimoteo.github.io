@@ -48,7 +48,7 @@ Como tudo: depende. E depende para cada pessoa. Cada solução terão vantagens 
 ### [Roam](https://roamresearch.com/)
 
 - App/Serviço Pago
-  - Porém existe localização de preço para brasileiros (é necessário entrar em contato)
+- Porém existe localização de preço para brasileiros (é necessário entrar em contato)
 
 ### [Obsidian](https://obsidian.md/)
 
