@@ -18,21 +18,22 @@
         <h1><a href="<%= base() %>"><%= @site.name %></a></h1>
         <p><%= @site.description %></p>
       </header>
-      <nav><%= include "nav" %></nav>
-      <hr>
+
+      <nav>
+        <%= include "nav" %>
+      </nav>
+
+      <hr />
+
       <main><%= @contents %></main>
-      <hr>
+
+      <hr />
+
       <footer>
-        <a href="https://dev.to/wevtimoteo" style="float: right">
-          <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Weverton Timoteo's DEV Profile" height="30" width="30">
-        </a>
         <%= include "footer" %>
-        <p>
-          Powered by <a href="https://github.com/Dalgona/Serum">Serum</a> v<%= Application.spec(:serum, :vsn) %>,
-          with <a href="https://github.com/Dalgona/serum-theme-essence">Essence</a> theme
-        </p>
       </footer>
     </div>
+
     <script src="<%= asset "js/prism.js" %>"></script>
   </body>
 </html>
