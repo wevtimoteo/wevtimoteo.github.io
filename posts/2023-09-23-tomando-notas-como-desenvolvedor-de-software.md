@@ -118,4 +118,29 @@ Se você não tem uma organização em mente, recomendo fortemente ir por essa e
 
 ## Como anotar rápido?
 
-Pense em não perder as ideias, não tem problema ter algum erro de digitação ou não ter muito detalhamento enquanto você está anotando algo (por exemplo, durante uma reuniã
+Pense em não perder as ideias, não tem problema ter algum erro de digitação ou não ter muito detalhamento enquanto você está anotando algo (por exemplo, durante uma reunião). **O importante é você não perder essa informação** e poder revisitar suas notas depois da reunião para organizar com etiquetas (tags), linkar notas existentes (como pessoas que participaram da reunião ou lugar que a mesma ocorreu).
+
+Eu gosto bastante do sistema de diário (criando uma entrada do dia e anotando tudo lá). O Obsidian não trabalha muito dessa maneira, comparado ao Logseq, mas utilizando o Cmd + P -> `Daily notes: Open today's daily note`, resolve isso de maneira muito rápida. É interessante adicionar algumas properties também, para isso, no início de cada nota basta utilizar o seguinte trecho:
+
+```
+---
+tags: health cooking
+url: https://minha.receita/almoco
+----
+```
+
+Você pode customizar as propriedades da nota com o que o você achar relevante, eu tenho linkado notas existentes nas propriedades diretamente (de forma experimental).
+
+Depois de achar um formato para cada tipo de nota, você pode transformá-los em Templates, então assim que abrir a nota, você pode utilizar Cmd + T (no Obsidian) para selecionar qual template utilizar, inclusive é possível aplicar vários templates na mesma nota.
+
+---
+
+### Plugins?
+
+Eu utilizo vários, porém não recomendo sair pegando os plugins que alguém utiliza e instalar tudo de uma vez. Deixe a necessidade surgir! No futuro pretendo compilar os que uso e por qual motivo, o único que faço questão de mencionar agora é o [remotely-save](https://github.com/remotely-save/remotely-save), para sincronizar as notas do Obsidian no S3 (ou compatível), Google Drive ou Dropbox. Permitindo assim você acessá-las no iOS ou Android.
+
+## Anotou?
+
+Nesse blog post já deve ter surgido várias coisas bacanas para você copiar e usar depois, se você ainda não começou a anotar: agora é o momento!
+
+Não deixe para depois e não espere o momento perfeito para anotar. Imagine a quantidade de coisas interessantes e de possibilidades que você poderia estar desenvolvendo há tanto tempo se já tivesse essas anotações desde o início da sua carreira?
