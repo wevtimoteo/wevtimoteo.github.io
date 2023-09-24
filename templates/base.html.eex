@@ -11,6 +11,12 @@
 
     <link rel="stylesheet" href="<%= asset("css/style.css") %>">
     <link rel="stylesheet" href="<%= asset("css/prism.css") %>">
+
+    <style>
+      img {
+        max-width: 800px;
+      }
+    </style>
   </head>
   <body>
     <div id="wrapper">
