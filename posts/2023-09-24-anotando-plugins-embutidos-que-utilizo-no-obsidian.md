@@ -108,7 +108,7 @@ Muito útil para quem escreve conteúdo, com esse plugin você sabe quantas pala
 
 Algo que aprendi na [SourceLevel](https://sourcelevel.io) ao escrever postagens com maior frequência foi que, segundo um [estudo de 2019 do pessoal da Backlinko](https://backlinko.com/content-study) (uma das referências em SEO, conteúdo e marketing), o **"sweet spot" para maximizar os shares nas redes sociais**, como Facebook, Twitter, Reddit e Pinterest, é algo **em torno de 1.000 - 2.000 palavras**.
 
-Blog posts nesse intervalo de conteúdo tem, em média, **56.1% de mais compartilhamentos que conteúdos com menos de 1.000 palavras**.
+Blog posts nesse intervalo de conteúdo tem, em média, **56.1% mais compartilhamentos que conteúdos com menos de 1.000 palavras**.
 
 ---
 
