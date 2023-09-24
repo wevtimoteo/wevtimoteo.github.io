@@ -10,7 +10,7 @@ Vamos começar falando sobre os plugins embutidos nele (conhecidos como `Core pl
 
 ## Audio recorder
 
-Sem dúvida, uma das funcionalidades mais amadas pelos brasileiros: um WhatsApp nas suas notas! :D só que aqui aqui você salva os **seus áudios** para você mesmo ouvir! Quero ver se você vai continuar gravando um podcast para cada áudio que envia para um contato depois dessa experiência.
+Sem dúvida, uma das funcionalidades mais amadas pelos brasileiros: um WhatsApp nas suas notas! :D só que aqui você salva os **seus áudios** para você mesmo ouvir! Quero ver se você vai continuar gravando um podcast para cada áudio que envia para um contato depois dessa experiência.
 
 Aqui a ideia é guardar a informação de forma rápida para depois usar alguma ferramenta de transcrição ou simplesmente sintetizar os pontos mais importantes do texto.
 
