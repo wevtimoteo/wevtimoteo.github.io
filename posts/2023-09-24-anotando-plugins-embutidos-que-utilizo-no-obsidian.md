@@ -14,7 +14,7 @@ Sem dúvida, uma das funcionalidades mais amadas pelos brasileiros: um WhatsApp 
 
 Aqui a ideia é guardar a informação de forma rápida para depois usar alguma ferramenta de transcrição ou simplesmente sintetizar os pontos mais importantes do texto.
 
-O formato utilizado é `.webm`, que garante uma ótima qualidade de gravação com um boa troca pelo tamanho do arquivo. A única desvantagem é que se você apagar a ocorrência de onde você linkou o áudio gravado, o Obsidian não vai te perguntar se quer também remover o anexo. Mapear esses anexos que nunca foram mencionados acaba sendo um tanto trabalhoso, então fica por sua conta.
+O formato utilizado é `.webm`, que garante uma ótima qualidade de gravação com uma boa troca pelo tamanho do arquivo. A única desvantagem é que se você apagar a ocorrência de onde você linkou o áudio gravado, o Obsidian não vai te perguntar se quer também remover o anexo. Mapear esses anexos que nunca foram mencionados acaba sendo um tanto trabalhoso, então fica por sua conta.
 
 Se fosse comparar o formato `.webm` com outros populares, seria mais ou menos isso:
 
