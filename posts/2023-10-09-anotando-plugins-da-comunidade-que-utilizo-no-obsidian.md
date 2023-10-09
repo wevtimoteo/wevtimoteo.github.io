@@ -4,7 +4,7 @@ date: 2023-10-09 12:00:00
 tags: notes
 ---
 
-Na [postagem passada](Anotando%20-%20Plugins%20embutidos%20que%20utilizo%20no%20Obsidian.md), eu mostrei quais plugins embutidos do [Obsidian](https://obsidian.md) eu deixo ligado e porquê. Agora é a hora de começar a montar o restante do fluxo de anotações utilizando os plugins da [comunidade](https://obsidian.md/community).
+Na [postagem passada](/posts/2023-09-24-anotando-plugins-embutidos-que-utilizo-no-obsidian.html), eu mostrei quais plugins embutidos do [Obsidian](https://obsidian.md) eu deixo ligado e porquê. Agora é a hora de começar a montar o restante do fluxo de anotações utilizando os plugins da [comunidade](https://obsidian.md/community).
 Todos que eu vou mostrar nessa lista estão disponíveis no GitHub. Para instalar qualquer um deles, basta abrir as preferências do Obsidian (Cmd + ,) > `Community Plugins` e clicar no botão `Browse`.
 Você também pode utilizar essa página para descobrir alternativas aos que eu vou mostrar aqui.
 
@@ -60,7 +60,7 @@ Eu sou do tipo de pessoa que gosta de linkar tudo. Assim consigo ter um backlink
 
 ### [Highlightr](https://github.com/chetachiezikeuzor/Highlightr-Plugin)
 
-Utilizando a técnica que eu descrevi no [primeiro blog post](Tomando%20notas%20como%20desenvolvedor%20de%20software.md) dessa série, quando eu compilo alguma leitura ou algum texto que preciso sintetizar, utilizo o **negrito** para as partes mais importantes e utilizo esse plugin para marcar com uma espécie de marca texto o destaque do destaque. Assim consigo obter aquele ideal de abrir uma nota e em até 30 segundos extrair toda info necessária dela (via dica do livro [Criando um Segundo Cérebro)](https://amzn.to/3LIXoEk).
+Utilizando a técnica que eu descrevi no [primeiro blog post](/posts/2023-09-23-tomando-notas-como-desenvolvedor-de-software.html) dessa série, quando eu compilo alguma leitura ou algum texto que preciso sintetizar, utilizo o **negrito** para as partes mais importantes e utilizo esse plugin para marcar com uma espécie de marca texto o destaque do destaque. Assim consigo obter aquele ideal de abrir uma nota e em até 30 segundos extrair toda info necessária dela (via dica do livro [Criando um Segundo Cérebro)](https://amzn.to/3LIXoEk).
 
 ### [Icon Folder](https://github.com/FlorianWoelki/obsidian-iconize)
 
