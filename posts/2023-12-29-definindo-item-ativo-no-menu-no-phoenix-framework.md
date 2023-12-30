@@ -4,6 +4,8 @@ date: 2023-12-29 22:30:00
 tags: phoenixframework, elixir, ptbr
 ---
 
+- [Read en-US version](https://wevtimoteo.github.io/posts/2023-12-29-definindo-item-ativo-no-menu-no-phoenix-framework.html)
+
 Ao desenvolver aplicações web, muitas vezes precisamos marcar itens de menu, abas ou outras partes da interface do usuário como ativos. No [Phoenix Framework](https://phoenixframework.org/), fazendo isso de forma rápida, pode ser que você chegue nesse resultado:
 
 ```elixir
