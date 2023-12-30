@@ -1,7 +1,7 @@
 ---
 title: Definindo item ativo no menu no Phoenix Framework usando Short-circuit Evaluation
 date: 2023-12-29 22:30:00
-tags: phoenixframework, elixir
+tags: phoenixframework, elixir, ptbr
 ---
 
 Ao desenvolver aplicações web, muitas vezes precisamos marcar itens de menu, abas ou outras partes da interface do usuário como ativos. No [Phoenix Framework](https://phoenixframework.org/), fazendo isso de forma rápida, pode ser que você chegue nesse resultado:
