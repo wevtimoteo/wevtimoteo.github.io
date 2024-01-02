@@ -12,7 +12,6 @@ Ao desenvolver aplicações web, muitas vezes precisamos marcar itens de menu, a
 <.link
   href={~p"/lojas/#{@store}/produtos"}
   class={"tab" <> if @active == :products, do: " tab-active", else: ""}
-  href={~p"/lojas/#{@store}/produtos"}
 >
   Produtos
 </.link>
