@@ -5,7 +5,7 @@ defmodule WevtimoteoGithubIo.MixFile do
     [
       app: :wevtimoteo_github_io,
       version: "0.1.0",
-      elixir: "~> 1.8",
+      elixir: "~> 1.20",
       start_permanent: Mix.env == :prod,
       deps: deps()
     ]
@@ -13,7 +13,7 @@ defmodule WevtimoteoGithubIo.MixFile do
 
   def application do
     [
-      applications: [:serum]
+      extra_applications: [:logger]
     ]
   end
 
