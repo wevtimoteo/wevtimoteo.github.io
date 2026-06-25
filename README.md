@@ -23,7 +23,7 @@ This will install proper versions described in `.tool-versions` file.
 Install dependencies and run Serum server:
 
 ```
-mix do deps.get, deps.compile
+mix do deps.get + deps.compile
 mix serum.server
 ```
 
