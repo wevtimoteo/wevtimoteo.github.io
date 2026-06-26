@@ -1,0 +1,120 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>Actions, Changesets e Queries no Ash: a lógica de negócio como contrato - wevtimoteo</title>
+
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+
+    <style>
+      img {
+        max-width: 800px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header id="top">
+        <h1><a href="/">wevtimoteo</a></h1>
+        <p>kairos _ sharing _ tech _ learning _ kaizen _ path</p>
+      </header>
+
+      <nav>
+        
+<ul>
+  <li><a href="/posts">Posts</a></li>
+  <li><a href="/about.html">About</a></li>
+</ul>
+
+      </nav>
+
+      <hr />
+
+      <main><h1 id="actions,-changesets-e-queries-no-ash:-a-lógica-de-negócio-como-contrato">Actions, Changesets e Queries no Ash: a lógica de negócio como contrato</h1><p>Posted on Monday, 22 Sep 2025 by Weverton Timoteo</p><p>Tags:</p><ul><li><a href="/tags/ash">ash</a></li><li><a href="/tags/ashframework">ashframework</a></li><li><a href="/tags/elixir">elixir</a></li><li><a href="/tags/phoenix">phoenix</a></li><li><a href="/tags/ptbr">ptbr</a></li></ul><p>Quando começamos a usar <a href="https://ash-hq.org/">Ash</a>, é comum prestar atenção primeiro nos Resources. Eles parecem a parte mais visível: atributos, relacionamentos, validações e configurações ficam todos ali.</p><p>Mas o ponto em que Ash realmente começa a mudar a modelagem da aplicação é nas actions.</p><p>Actions são a API explícita do domínio. Elas dizem o que pode ser feito com um Resource. Não apenas “existe um update”, mas “existe uma operação chamada publicar”, “existe uma leitura chamada ativos”, “existe uma criação chamada importar do CSV”.</p><p>Essa diferença é pequena na sintaxe e grande na manutenção.</p><h2 id="crud-ainda-existe">CRUD ainda existe</h2><p>Ash não tenta fingir que CRUD não existe. Muitas entidades começam com operações básicas: criar, ler, atualizar e remover.</p><p>Um Resource pode expor ações padrão:</p><pre><code class="elixir">actions do
+  defaults [:read, :destroy, create: [:name], update: [:name, :status]]
+end</code></pre><p>Esse bloco já comunica algumas coisas:</p><ul><li>existe leitura padrão;
+</li><li>existe destruição;
+</li><li>a criação aceita <code class="inline">:name</code>;
+</li><li>a atualização aceita <code class="inline">:name</code> e <code class="inline">:status</code>.
+</li></ul><p>Em uma aplicação pequena, isso pode parecer só uma forma diferente de escrever changesets. A diferença aparece quando você começa a nomear operações que têm sentido no negócio.</p><h2 id="actions-com-nome-de-domínio">Actions com nome de domínio</h2><p>Imagine um <code class="inline">Post</code> de blog dentro de um CMS. Ele pode ser criado como rascunho, publicado, arquivado e talvez revisado por outra pessoa.</p><p>Em uma abordagem tradicional, poderíamos ter funções assim em um context:</p><pre><code class="elixir">create_post(attrs)
+publish_post(post, user)
+archive_post(post, user)
+list_published_posts()</code></pre><p>Isso é normal e funciona. Em Ash, a intenção é aproximar essas operações do Resource:</p><pre><code class="elixir">actions do
+  defaults [:read]
+
+  create :draft do
+    accept [:title, :body]
+  end
+
+  update :publish do
+    accept []
+  end
+
+  update :archive do
+    accept []
+  end
+
+  read :published
+end</code></pre><p>Esse exemplo é simplificado, mas mostra o ponto: <code class="inline">draft</code>, <code class="inline">publish</code>, <code class="inline">archive</code> e <code class="inline">published</code> são parte do contrato do Resource. A aplicação deixa de ter apenas um update genérico e passa a ter operações nomeadas.</p><p>Isso ajuda muito quando o mesmo Resource é usado por várias interfaces. Uma LiveView, uma API, um worker e um script interno podem chamar a mesma action, em vez de cada caminho decidir manualmente quais campos aceitar e quais regras aplicar.</p><h2 id="changesets-no-ash">Changesets no Ash</h2><p>Em Ecto, changeset é um conceito conhecido: você pega dados de entrada, faz cast, valida, aplica constraints e passa para o Repo.</p><p>Ash também tem changesets, mas eles vivem dentro do fluxo das actions. Um <a href="https://hexdocs.pm/ash/Ash.Changeset.html">Ash.Changeset</a> representa uma tentativa de mudança em um Resource para uma action específica.</p><p>Em vez de pensar “vou montar qualquer changeset para Product”, a pergunta vira: “vou montar um changeset para executar a action <code class="inline">:publish</code> em Product”.</p><p>Um exemplo de chamada pode ter esta forma:</p><pre><code class="elixir">MyApp.Catalog.Product
+|&gt; Ash.Changeset.for_create(:create, %{name: &quot;Keyboard&quot;})
+|&gt; Ash.create()</code></pre><p>Para update, o ponto é parecido: existe uma mudança em um registro, mas essa mudança está ligada a uma action.</p><pre><code class="elixir">product
+|&gt; Ash.Changeset.for_update(:archive, %{})
+|&gt; Ash.update()</code></pre><p>O ganho é que a action passa a ser o contexto da alteração. Ela pode definir campos aceitos, validações, changes, autorização e efeitos colaterais. O changeset não é uma validação solta; ele é uma tentativa de executar uma operação do domínio.</p><h2 id="changes-e-validations">Changes e validations</h2><p>Dentro de uma action, Ash permite adicionar validations e changes.</p><p>Uma validation responde: “essa entrada é permitida?”. Uma change responde: “o que precisa ser alterado ou preparado durante essa ação?”.</p><p>Por exemplo, uma action <code class="inline">:publish</code> pode validar que o post tem título e corpo. Também pode marcar status como publicado e preencher <code class="inline">published_at</code>. Uma action <code class="inline">:archive</code> pode mudar apenas o status e talvez registrar quem arquivou.</p><p>O detalhe importante é que essas regras ficam presas à operação.</p><p>Isso evita uma classe comum de bug: uma validação escrita para o fluxo de criação acaba sendo reaproveitada sem querer em importação, ou uma mudança automática feita para o painel administrativo aparece em uma sincronização externa.</p><p>Quando cada action tem nome e contrato, fica mais fácil decidir onde cada regra pertence.</p><h2 id="queries-no-ash">Queries no Ash</h2><p>Leitura também faz parte do contrato.</p><p>Em Ecto, é comum escrever queries diretas:</p><pre><code class="elixir">from p in Post,
+  where: p.status == :published,
+  order_by: [desc: p.published_at]</code></pre><p>Isso continua sendo uma forma poderosa de pensar, especialmente quando você quer controle fino de SQL. Em Ash, uma <a href="https://hexdocs.pm/ash/Ash.Query.html">Ash.Query</a> representa uma leitura de um Resource, normalmente ligada a uma read action.</p><p>Uma chamada pode ser algo assim:</p><pre><code class="elixir">MyApp.CMS.Post
+|&gt; Ash.Query.for_read(:published)
+|&gt; Ash.read!()</code></pre><p>O interessante é que <code class="inline">:published</code> não é só uma query perdida em algum módulo. É uma action de leitura. Ela pode carregar filtros padrão, preparações, autorização e regras de visibilidade.</p><p>Isso é útil quando “listar publicados” não significa apenas <code class="inline">status == :published</code>. Talvez precise respeitar tenant, esconder posts removidos, aplicar autorização por autor, ordenar de um jeito específico e carregar dados derivados.</p><p>Colocar isso em uma read action deixa a intenção mais clara.</p><h2 id="operações-nomeadas-reduzem-ambiguidade">Operações nomeadas reduzem ambiguidade</h2><p>Em muitos sistemas, o problema não é falta de função. É função demais.</p><p>Você procura por <code class="inline">update_user</code>, encontra cinco variações, lê cada uma e tenta descobrir qual é a correta para aquele fluxo. Uma recebe actor, outra não. Uma valida e-mail, outra pula. Uma dispara evento, outra foi criada para importação.</p><p>Ash não impede código confuso, mas força uma pergunta útil: qual action representa esta operação?</p><p>Se a resposta for <code class="inline">:register</code>, <code class="inline">:invite</code>, <code class="inline">:confirm_email</code>, <code class="inline">:disable</code>, <code class="inline">:promote_to_admin</code>, o domínio fica mais legível. Você passa a navegar por operações de negócio, não apenas por funções técnicas.</p><p>Esse modelo também ajuda em reviews. Quando alguém cria uma nova action, a discussão fica concreta: essa operação deveria existir? Ela aceita os campos certos? Precisa de autorização? Deveria ser uma action nova ou uma variação de uma action existente?</p><h2 id="o-cuidado-com-actions-demais">O cuidado com actions demais</h2><p>Existe um risco do outro lado: criar action para tudo.</p><p>Se cada pequena variação vira uma action, o Resource fica difícil de entender. A ideia não é transformar todo botão da interface em uma action separada. A ideia é nomear operações que têm significado no domínio.</p><p>Uma boa pergunta é: “essa operação teria o mesmo nome se eu explicasse o sistema para alguém fora da equipe técnica?”</p><p>Se sim, provavelmente vale uma action. Se não, talvez seja apenas um detalhe de interface ou uma preparação interna.</p><h2 id="fechando">Fechando</h2><p>Actions, changesets e queries são o ponto em que Ash começa a mostrar seu valor além da estrutura.</p><p>Actions nomeiam operações. Changesets representam tentativas de executar essas operações. Queries colocam leituras importantes dentro do contrato do domínio.</p><p>Isso não elimina a necessidade de pensar em arquitetura. Mas ajuda a tirar regras importantes de lugares espalhados e trazê-las para uma API mais explícita.</p><p>No próximo post, vou falar sobre authorization policies, uma das partes em que essa abordagem declarativa fica ainda mais útil.</p></main>
+
+      <hr />
+
+      <footer>
+        
+<a href="https://dev.to/wevtimoteo" target="_blank" style="float: right">
+  <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Weverton Timoteo's DEV Profile" height="30" width="30">
+</a>
+
+<a href="https://github.com/wevtimoteo/wevtimoteo.github.io" target="_blank" style="float: right;margin-right: 10px">
+  <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 30 30" height="30px" id="Layer_1" version="1.1" viewBox="0 0 512 512" width="30px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path clip-rule="evenodd" d="M296.133,354.174c49.885-5.891,102.942-24.029,102.942-110.192   c0-24.49-8.624-44.448-22.67-59.869c2.266-5.89,9.515-28.114-2.734-58.947c0,0-18.139-5.898-60.759,22.669   c-18.139-4.983-38.09-8.163-56.682-8.163c-19.053,0-39.011,3.18-56.697,8.163c-43.082-28.567-61.22-22.669-61.22-22.669   c-12.241,30.833-4.983,53.057-2.718,58.947c-14.061,15.42-22.677,35.379-22.677,59.869c0,86.163,53.057,104.301,102.942,110.192   c-6.344,5.452-12.241,15.873-14.507,30.387c-12.702,5.438-45.808,15.873-65.758-18.592c0,0-11.795-21.31-34.012-22.669   c0,0-22.224-0.453-1.813,13.592c0,0,14.96,6.812,24.943,32.653c0,0,13.6,43.089,76.179,29.48v38.543   c0,5.906-4.53,12.702-15.865,10.89C96.139,438.977,32.2,354.626,32.2,255.77c0-123.807,100.216-224.022,224.03-224.022   c123.347,0,224.023,100.216,223.57,224.022c0,98.856-63.946,182.754-152.828,212.688c-11.342,2.266-15.873-4.53-15.873-10.89   V395.45C311.1,374.577,304.288,360.985,296.133,354.174L296.133,354.174z M512,256.23C512,114.73,397.263,0,256.23,0   C114.73,0,0,114.73,0,256.23C0,397.263,114.73,512,256.23,512C397.263,512,512,397.263,512,256.23L512,256.23z" fill="#0D2636" fill-rule="evenodd"/></g></svg>
+</a>
+
+<p>
+  Powered by <a href="https://github.com/Dalgona/Serum">Serum</a> v1.5.1,
+  with <a href="https://github.com/Dalgona/serum-theme-essence">Essence</a> theme
+</p>
+
+      </footer>
+    </div>
+
+    <script src="/assets/js/prism.js"></script>
+  </body>
+</html>
+<script>
+const ws_url = "ws://" + location.host + "/serum_live_reloader";
+var ws;
+
+connect();
+
+function connect() {
+  ws = new WebSocket(ws_url);
+  ws.onmessage = onMessage;
+  ws.onclose = onClose;
+}
+
+function onMessage(e) {
+  if (e.data === "reload") {
+    location.reload();
+  }
+}
+
+function onClose(e) {
+  console.warn("WebSocket disconnected from server. Reconnecting in 10 seconds.");
+  setTimeout(connect, 10000)
+}
+</script>

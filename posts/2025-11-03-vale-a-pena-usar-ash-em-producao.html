@@ -1,0 +1,115 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>Vale a pena usar Ash em produção? Prós, contras e curva de aprendizado - wevtimoteo</title>
+
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+
+    <style>
+      img {
+        max-width: 800px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header id="top">
+        <h1><a href="/">wevtimoteo</a></h1>
+        <p>kairos _ sharing _ tech _ learning _ kaizen _ path</p>
+      </header>
+
+      <nav>
+        
+<ul>
+  <li><a href="/posts">Posts</a></li>
+  <li><a href="/about.html">About</a></li>
+</ul>
+
+      </nav>
+
+      <hr />
+
+      <main><h1 id="vale-a-pena-usar-ash-em-produção?-prós,-contras-e-curva-de-aprendizado">Vale a pena usar Ash em produção? Prós, contras e curva de aprendizado</h1><p>Posted on Monday, 3 Nov 2025 by Weverton Timoteo</p><p>Tags:</p><ul><li><a href="/tags/ash">ash</a></li><li><a href="/tags/ashframework">ashframework</a></li><li><a href="/tags/elixir">elixir</a></li><li><a href="/tags/phoenix">phoenix</a></li><li><a href="/tags/ptbr">ptbr</a></li></ul><p>Depois de falar sobre Resources, actions, policies, LiveView, multi-tenancy, autenticação, calculations e aggregates, sobra a pergunta mais importante:</p><p>Vale a pena usar <a href="https://ash-hq.org/">Ash Framework</a> em produção?</p><p>A resposta honesta é: depende do tipo de aplicação, da equipe e do tamanho do domínio.</p><p>Eu não colocaria Ash na categoria de “use sempre”. Também não colocaria na categoria de “complexidade desnecessária”. Ele resolve problemas reais, mas cobra um preço real: curva de aprendizado, mudança de mentalidade e mais uma camada para entender.</p><h2 id="o-que-ash-faz-muito-bem">O que Ash faz muito bem</h2><p>O maior mérito do Ash é tornar o domínio mais explícito.</p><p>Em aplicações Phoenix tradicionais, muita coisa depende de convenção: contexts bem nomeados, changesets bem separados, queries reutilizadas, autorização aplicada nos lugares certos, filtros de tenant lembrados em toda chamada.</p><p>Isso funciona quando a equipe é disciplinada e o domínio ainda está pequeno. Mas conforme o sistema cresce, regras importantes começam a se espalhar.</p><p>Ash oferece um modelo para concentrar essas regras em Resources e actions. O Resource diz quais atributos existem. As actions dizem quais operações fazem sentido. Policies declaram autorização. Calculations e aggregates dão nome para dados derivados. Multi-tenancy deixa de ser apenas um filtro manual.</p><p>Esse conjunto cria um contrato mais visível.</p><h2 id="produtividade">Produtividade</h2><p>Ash pode aumentar produtividade, mas não necessariamente no primeiro dia.</p><p>No começo, você vai gastar tempo entendendo a DSL, lendo documentação, errando modelagem e descobrindo onde cada regra deve viver. Esse investimento é real.</p><p>O ganho aparece quando o domínio começa a repetir padrões:</p><ul><li>formulários baseados em actions;
+</li><li>APIs que respeitam o mesmo contrato;
+</li><li>autorização reaproveitada;
+</li><li>multi-tenancy consistente;
+</li><li>operações de negócio nomeadas;
+</li><li>menos código duplicado entre LiveView, API e workers.
+</li></ul><p>Quando isso acontece, Ash deixa de ser “mais uma coisa” e vira uma base comum.</p><p>Mas se a aplicação tem três tabelas, CRUD simples e uma única interface administrativa, talvez você nunca recupere o custo inicial.</p><h2 id="curva-de-aprendizado">Curva de aprendizado</h2><p>Ash exige aprender conceitos próprios.</p><p>Você precisa entender Resources, Domains, actions, changes, validations, preparations, policies, data layers, actors, tenants e extensões. Mesmo para quem já conhece Elixir e Phoenix, não é só “mais uma lib”.</p><p>Também existe uma mudança de estilo. Parte da lógica deixa de aparecer como funções comuns e passa a aparecer como declaração. Isso pode ser ótimo para padronização, mas pode incomodar quem prefere fluxo explícito em código Elixir puro.</p><p>O risco não é só individual. É de equipe.</p><p>Se apenas uma pessoa entende Ash, a aplicação fica vulnerável. Se a equipe inteira entende a abordagem, o ganho aparece. Por isso, eu teria cuidado ao adotar Ash em uma equipe que ainda está aprendendo Elixir, Phoenix e Ecto ao mesmo tempo.</p><h2 id="documentação-e-ecossistema">Documentação e ecossistema</h2><p>Ash tem documentação extensa e um ecossistema ativo, mas a quantidade de conceitos pode assustar.</p><p>Esse é um ponto ambíguo. Documentação grande é boa porque cobre muitos cenários. Ao mesmo tempo, para quem está começando, pode ser difícil saber qual parte ler primeiro.</p><p>Além do pacote principal, existem integrações como AshPostgres, AshPhoenix, AshAuthentication e outras extensões. Isso é poderoso, mas também significa que você precisa entender a fronteira entre elas.</p><p>Em produção, esse ponto importa. Quando algo quebra, a equipe precisa saber se o problema está no Resource, na action, no data layer, na policy, na integração Phoenix ou na forma como a chamada foi feita.</p><p>Não é impeditivo. Mas não dá para adotar fingindo que a abstração não existe.</p><h2 id="riscos-de-adoção">Riscos de adoção</h2><p>O primeiro risco é supermodelar.</p><p>Como Ash oferece muitos blocos, é tentador usar todos desde o começo. Resource pequeno vira arquivo grande. Action simples ganha validações, changes, policies e calculations antes da hora. A aplicação fica “correta”, mas difícil de ler.</p><p>O segundo risco é tratar Ash como gerador de aplicação.</p><p>Ash ajuda a reduzir boilerplate, mas não decide produto. Você ainda precisa desenhar fluxos, escolher nomes, pensar em UX, escrever testes e entender o banco.</p><p>O terceiro risco é adoção parcial sem clareza.</p><p>Se metade do domínio passa pelo Ash e metade ignora as actions, a equipe pode acabar com dois modelos mentais competindo. Isso pode ser necessário durante uma migração, mas precisa ser uma escolha consciente.</p><h2 id="onde-eu-consideraria-usar">Onde eu consideraria usar</h2><p>Eu consideraria Ash em produção quando a aplicação tem pelo menos alguns destes sinais:</p><ul><li>domínio rico, com operações além de CRUD;
+</li><li>várias interfaces consumindo a mesma regra;
+</li><li>autorização não trivial;
+</li><li>multi-tenancy;
+</li><li>necessidade de API pública ou GraphQL;
+</li><li>muitos formulários parecidos;
+</li><li>actions diferentes para o mesmo Resource;
+</li><li>workers executando regras do domínio;
+</li><li>equipe disposta a aprender a abordagem.
+</li></ul><p>Em SaaS, especialmente, Ash fica interessante. Tenant, actor, policies e actions nomeadas aparecem naturalmente nesse tipo de produto.</p><p>Também consideraria Ash em sistemas internos grandes, onde consistência e velocidade de evolução importam mais do que evitar qualquer abstração.</p><h2 id="onde-eu-evitaria">Onde eu evitaria</h2><p>Eu evitaria Ash quando:</p><ul><li>a aplicação é pequena;
+</li><li>o domínio é basicamente CRUD;
+</li><li>a equipe ainda está aprendendo Phoenix e Ecto;
+</li><li>o sistema depende de SQL muito específico em quase tudo;
+</li><li>a equipe não quer uma DSL declarativa;
+</li><li>o prazo não permite absorver a curva;
+</li><li>só uma pessoa teria conhecimento para manter.
+</li></ul><p>Nesses casos, Phoenix Contexts com Ecto continuam sendo uma escolha excelente. Simples, explícita e bem compreendida.</p><p>Não existe mérito em usar uma ferramenta mais poderosa se o problema não precisa dela.</p><h2 id="testes-continuam-essenciais">Testes continuam essenciais</h2><p>Ash centraliza regras, mas não dispensa testes.</p><p>Na verdade, actions e policies pedem testes claros:</p><ul><li>quem pode executar a action;
+</li><li>quais campos são aceitos;
+</li><li>quais validações bloqueiam;
+</li><li>como tenant é aplicado;
+</li><li>quais calculations e aggregates retornam;
+</li><li>quais efeitos colaterais acontecem.
+</li></ul><p>O lado bom é que essas regras têm nomes. Testar <code class="inline">:publish</code>, <code class="inline">:archive</code> ou <code class="inline">:invite</code> costuma ser mais legível do que testar uma sequência de funções genéricas.</p><p>Se a equipe usar Ash em produção sem testes de actions e policies, está abrindo mão de uma das principais vantagens do framework.</p><h2 id="minha-conclusão">Minha conclusão</h2><p>Eu usaria Ash em produção, mas não como reflexo automático.</p><p>Usaria quando o domínio justificar: SaaS, autorização, multi-tenancy, APIs, múltiplas interfaces e operações com nomes reais de negócio. Nesses cenários, a estrutura declarativa pode reduzir bastante ambiguidade.</p><p>Não usaria só para seguir tendência. Em aplicação pequena, Ecto e Phoenix Contexts são mais diretos e provavelmente mais baratos.</p><p>Ash muda a pergunta principal. Em vez de “como eu salvo isso no banco?”, você começa a perguntar “qual operação do domínio representa isso?”.</p><p>Quando essa pergunta é importante para o produto, Ash merece espaço. Quando ela ainda é simples demais, talvez seja melhor ficar com as ferramentas mais básicas.</p><p>Para mim, esse é o equilíbrio: Ash é uma boa aposta para domínios que precisam de contrato forte. Não é uma obrigação para todo projeto Elixir.</p></main>
+
+      <hr />
+
+      <footer>
+        
+<a href="https://dev.to/wevtimoteo" target="_blank" style="float: right">
+  <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Weverton Timoteo's DEV Profile" height="30" width="30">
+</a>
+
+<a href="https://github.com/wevtimoteo/wevtimoteo.github.io" target="_blank" style="float: right;margin-right: 10px">
+  <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 30 30" height="30px" id="Layer_1" version="1.1" viewBox="0 0 512 512" width="30px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path clip-rule="evenodd" d="M296.133,354.174c49.885-5.891,102.942-24.029,102.942-110.192   c0-24.49-8.624-44.448-22.67-59.869c2.266-5.89,9.515-28.114-2.734-58.947c0,0-18.139-5.898-60.759,22.669   c-18.139-4.983-38.09-8.163-56.682-8.163c-19.053,0-39.011,3.18-56.697,8.163c-43.082-28.567-61.22-22.669-61.22-22.669   c-12.241,30.833-4.983,53.057-2.718,58.947c-14.061,15.42-22.677,35.379-22.677,59.869c0,86.163,53.057,104.301,102.942,110.192   c-6.344,5.452-12.241,15.873-14.507,30.387c-12.702,5.438-45.808,15.873-65.758-18.592c0,0-11.795-21.31-34.012-22.669   c0,0-22.224-0.453-1.813,13.592c0,0,14.96,6.812,24.943,32.653c0,0,13.6,43.089,76.179,29.48v38.543   c0,5.906-4.53,12.702-15.865,10.89C96.139,438.977,32.2,354.626,32.2,255.77c0-123.807,100.216-224.022,224.03-224.022   c123.347,0,224.023,100.216,223.57,224.022c0,98.856-63.946,182.754-152.828,212.688c-11.342,2.266-15.873-4.53-15.873-10.89   V395.45C311.1,374.577,304.288,360.985,296.133,354.174L296.133,354.174z M512,256.23C512,114.73,397.263,0,256.23,0   C114.73,0,0,114.73,0,256.23C0,397.263,114.73,512,256.23,512C397.263,512,512,397.263,512,256.23L512,256.23z" fill="#0D2636" fill-rule="evenodd"/></g></svg>
+</a>
+
+<p>
+  Powered by <a href="https://github.com/Dalgona/Serum">Serum</a> v1.5.1,
+  with <a href="https://github.com/Dalgona/serum-theme-essence">Essence</a> theme
+</p>
+
+      </footer>
+    </div>
+
+    <script src="/assets/js/prism.js"></script>
+  </body>
+</html>
+<script>
+const ws_url = "ws://" + location.host + "/serum_live_reloader";
+var ws;
+
+connect();
+
+function connect() {
+  ws = new WebSocket(ws_url);
+  ws.onmessage = onMessage;
+  ws.onclose = onClose;
+}
+
+function onMessage(e) {
+  if (e.data === "reload") {
+    location.reload();
+  }
+}
+
+function onClose(e) {
+  console.warn("WebSocket disconnected from server. Reconnecting in 10 seconds.");
+  setTimeout(connect, 10000)
+}
+</script>

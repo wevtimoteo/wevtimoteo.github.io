@@ -1,0 +1,140 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>Criando seu primeiro Resource no Ash Framework - wevtimoteo</title>
+
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+
+    <style>
+      img {
+        max-width: 800px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header id="top">
+        <h1><a href="/">wevtimoteo</a></h1>
+        <p>kairos _ sharing _ tech _ learning _ kaizen _ path</p>
+      </header>
+
+      <nav>
+        
+<ul>
+  <li><a href="/posts">Posts</a></li>
+  <li><a href="/about.html">About</a></li>
+</ul>
+
+      </nav>
+
+      <hr />
+
+      <main><h1 id="criando-seu-primeiro-resource-no-ash-framework">Criando seu primeiro Resource no Ash Framework</h1><p>Posted on Monday, 15 Sep 2025 by Weverton Timoteo</p><p>Tags:</p><ul><li><a href="/tags/ash">ash</a></li><li><a href="/tags/ashframework">ashframework</a></li><li><a href="/tags/elixir">elixir</a></li><li><a href="/tags/phoenix">phoenix</a></li><li><a href="/tags/ptbr">ptbr</a></li></ul><p>Nos posts anteriores, falei sobre o problema que o <a href="https://ash-hq.org/">Ash Framework</a> tenta resolver e comparei Ash com o caminho mais comum em Phoenix: Contexts com <a href="https://hexdocs.pm/ecto/Ecto.html">Ecto</a>.</p><p>Agora dá para descer um nível e olhar para a peça mais importante do Ash: o Resource.</p><p>Um Resource é a forma como Ash modela um conceito do domínio. Pode ser <code class="inline">Product</code>, <code class="inline">Customer</code>, <code class="inline">Invoice</code>, <code class="inline">Task</code>, <code class="inline">Post</code>, <code class="inline">Organization</code>, <code class="inline">Subscription</code>. O nome não importa tanto quanto a ideia: um Resource não é apenas uma tabela ou uma struct. Ele descreve atributos, relacionamentos, ações, validações e outras regras ligadas àquele conceito.</p><p>Se você vem de Ecto, a tentação é pensar: “Resource é o schema do Ash”. Essa comparação ajuda no começo, mas fica incompleta rápido. Um schema Ecto descreve dados e parte da validação de entrada. Um Resource Ash também descreve quais operações existem para aquele dado.</p><p>É essa diferença que faz o Resource ser interessante.</p><h2 id="um-exemplo-simples:-product">Um exemplo simples: Product</h2><p>Vamos imaginar um catálogo simples de produtos. Em uma aplicação Phoenix tradicional, você provavelmente teria um schema <code class="inline">Product</code>, um changeset e funções no contexto <code class="inline">Catalog</code>.</p><p>Com Ash, começamos declarando um Resource:</p><pre><code class="elixir">defmodule MyApp.Catalog.Product do
+  use Ash.Resource,
+    domain: MyApp.Catalog
+
+  attributes do
+    uuid_primary_key :id
+
+    attribute :name, :string do
+      allow_nil? false
+      public? true
+    end
+
+    attribute :description, :string do
+      public? true
+    end
+
+    attribute :status, :atom do
+      constraints one_of: [:draft, :active, :archived]
+      default :draft
+      public? true
+    end
+  end
+
+  actions do
+    defaults [:read, :destroy, create: [:name, :description], update: [:name, :description, :status]]
+  end
+end</code></pre><p>Esse exemplo é pequeno de propósito. Ele não inclui banco, policies, relacionamentos ou multi-tenancy. A intenção é mostrar a estrutura básica: o Resource tem atributos e ações no mesmo lugar.</p><p>O <code class="inline">uuid_primary_key :id</code> declara a chave primária. Os atributos <code class="inline">:name</code>, <code class="inline">:description</code> e <code class="inline">:status</code> descrevem dados do produto. O bloco <code class="inline">actions</code> define operações básicas disponíveis para esse Resource.</p><p>A partir daí, o domínio começa a ter um contrato mais explícito.</p><h2 id="attributes-não-são-apenas-colunas">Attributes não são apenas colunas</h2><p>Em uma aplicação com AshPostgres, muitos attributes vão virar colunas no banco. Mesmo assim, vale evitar pensar neles apenas como colunas.</p><p>Um attribute define parte da interface do Resource. Quando você marca um campo como público, está dizendo que ele pode aparecer em interfaces e chamadas externas controladas pelo Ash. Quando coloca <code class="inline">allow_nil? false</code>, está deixando clara uma regra mínima do domínio.</p><p>No exemplo, <code class="inline">name</code> não pode ser <code class="inline">nil</code>. Isso parece pequeno, mas é uma regra que deixa de ficar escondida em uma função específica. Quem lê o Resource entende rapidamente que produto sem nome não faz sentido.</p><p>O <code class="inline">status</code> também diz algo importante. Não é qualquer string perdida no banco; é um conjunto conhecido de estados: <code class="inline">:draft</code>, <code class="inline">:active</code>, <code class="inline">:archived</code>. Mesmo antes de escrever regras mais avançadas, o Resource já comunica uma intenção.</p><h2 id="actions-são-a-api-do-resource">Actions são a API do Resource</h2><p>O bloco <code class="inline">actions</code> talvez seja a parte mais importante para quem está conhecendo Ash.</p><p>Em muitos códigos Phoenix, a API do domínio é um conjunto de funções no context. Isso funciona, mas depende da equipe manter nomes e contratos coerentes. Em Ash, as ações fazem parte do Resource.</p><p>No exemplo acima, usamos <code class="inline">defaults</code> para criar operações básicas: read, create, update e destroy. Isso é útil para começar, mas em aplicações reais você provavelmente vai criar ações com nomes mais próximos do negócio.</p><p>Por exemplo:</p><pre><code class="elixir">actions do
+  defaults [:read, :destroy]
+
+  create :create do
+    accept [:name, :description]
+  end
+
+  update :publish do
+    accept []
+  end
+
+  update :archive do
+    accept []
+  end
+end</code></pre><p>Esse segundo exemplo já muda a conversa. <code class="inline">publish</code> e <code class="inline">archive</code> são operações do domínio. Elas não são apenas updates genéricos. Mesmo antes de adicionar mudanças automáticas, validações ou policies, o Resource passa a mostrar quais verbos fazem sentido para um produto.</p><p>É uma forma de evitar que todo update vire “altera qualquer coisa se o mapa de parâmetros deixar”.</p><h2 id="domain:-onde-os-resources-se-agrupam">Domain: onde os Resources se agrupam</h2><p>No exemplo, o Resource usa <code class="inline">domain: MyApp.Catalog</code>.</p><p>Um <a href="https://hexdocs.pm/ash/domains.html">Domain</a> agrupa Resources relacionados. Se você já usa Phoenix Contexts, dá para pensar no Domain como a fronteira de uma área da aplicação: <code class="inline">Catalog</code>, <code class="inline">Accounts</code>, <code class="inline">Billing</code>, <code class="inline">Support</code>.</p><p>Mas o Domain em Ash não é apenas um módulo com funções soltas. Ele conhece os Resources daquela área. Isso permite que o Ash organize operações e, dependendo da configuração, exponha uma interface de código para chamar ações do domínio.</p><p>Um domínio de catálogo poderia agrupar <code class="inline">Product</code>, <code class="inline">Category</code>, <code class="inline">PriceList</code> e <code class="inline">InventoryItem</code>. Um domínio de contas poderia agrupar <code class="inline">User</code>, <code class="inline">Organization</code>, <code class="inline">Membership</code> e <code class="inline">Invitation</code>.</p><p>Essa organização ajuda a manter o mapa mental da aplicação. Recursos relacionados ficam próximos, sem transformar um único módulo em uma gaveta de funções.</p><h2 id="o-que-ainda-não-apareceu">O que ainda não apareceu</h2><p>Um Resource real pode ter muito mais coisa:</p><ul><li>relacionamentos;
+</li><li>identities;
+</li><li>validations;
+</li><li>changes;
+</li><li>policies;
+</li><li>calculations;
+</li><li>aggregates;
+</li><li>data layer;
+</li><li>multi-tenancy.
+</li></ul><p>Não é necessário usar tudo no primeiro dia. Na prática, é melhor começar pequeno. Declare os atributos, defina ações básicas e só adicione complexidade quando a regra realmente existir.</p><p>Essa é uma armadilha comum com frameworks declarativos: como a ferramenta oferece muitos blocos, dá vontade de preencher todos. Normalmente, isso só torna o Resource difícil de ler.</p><p>O Resource deve explicar o domínio, não virar um inventário de recursos do framework.</p><h2 id="comparando-com-ecto-schema">Comparando com Ecto Schema</h2><p>Um schema Ecto costuma responder: “qual é a forma deste dado?”.</p><p>Um Resource Ash tenta responder também: “o que pode ser feito com este dado?”.</p><p>Essa diferença fica clara quando pensamos em <code class="inline">archive</code>. Em Ecto puro, você poderia ter uma função no context:</p><pre><code class="elixir">def archive_product(product) do
+  product
+  |&gt; Product.changeset(%{status: :archived})
+  |&gt; Repo.update()
+end</code></pre><p>Isso é simples e correto. Com Ash, a ideia é que <code class="inline">archive</code> possa ser uma action do Resource. Assim, autorização, validação e outros comportamentos podem se ligar a essa operação nomeada.</p><p>Não é que uma abordagem seja sempre melhor. A diferença é onde o contrato aparece.</p><h2 id="fechando">Fechando</h2><p>Criar um Resource no Ash é começar a desenhar o domínio de forma declarativa.</p><p>O exemplo de <code class="inline">Product</code> mostra só o básico, mas já apresenta a mudança de perspectiva: atributos e ações ficam próximos, e o Resource passa a mostrar quais operações existem para aquele conceito.</p><p>Quando a aplicação é pequena, isso pode parecer apenas outra forma de escrever o que você já faria com Ecto. Quando o domínio cresce, porém, ter esse contrato explícito ajuda bastante.</p><p>No próximo post, vou entrar em actions, changesets e queries com mais detalhe, porque é ali que o Resource deixa de ser apenas uma descrição e começa a virar a API real do domínio.</p></main>
+
+      <hr />
+
+      <footer>
+        
+<a href="https://dev.to/wevtimoteo" target="_blank" style="float: right">
+  <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Weverton Timoteo's DEV Profile" height="30" width="30">
+</a>
+
+<a href="https://github.com/wevtimoteo/wevtimoteo.github.io" target="_blank" style="float: right;margin-right: 10px">
+  <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 30 30" height="30px" id="Layer_1" version="1.1" viewBox="0 0 512 512" width="30px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path clip-rule="evenodd" d="M296.133,354.174c49.885-5.891,102.942-24.029,102.942-110.192   c0-24.49-8.624-44.448-22.67-59.869c2.266-5.89,9.515-28.114-2.734-58.947c0,0-18.139-5.898-60.759,22.669   c-18.139-4.983-38.09-8.163-56.682-8.163c-19.053,0-39.011,3.18-56.697,8.163c-43.082-28.567-61.22-22.669-61.22-22.669   c-12.241,30.833-4.983,53.057-2.718,58.947c-14.061,15.42-22.677,35.379-22.677,59.869c0,86.163,53.057,104.301,102.942,110.192   c-6.344,5.452-12.241,15.873-14.507,30.387c-12.702,5.438-45.808,15.873-65.758-18.592c0,0-11.795-21.31-34.012-22.669   c0,0-22.224-0.453-1.813,13.592c0,0,14.96,6.812,24.943,32.653c0,0,13.6,43.089,76.179,29.48v38.543   c0,5.906-4.53,12.702-15.865,10.89C96.139,438.977,32.2,354.626,32.2,255.77c0-123.807,100.216-224.022,224.03-224.022   c123.347,0,224.023,100.216,223.57,224.022c0,98.856-63.946,182.754-152.828,212.688c-11.342,2.266-15.873-4.53-15.873-10.89   V395.45C311.1,374.577,304.288,360.985,296.133,354.174L296.133,354.174z M512,256.23C512,114.73,397.263,0,256.23,0   C114.73,0,0,114.73,0,256.23C0,397.263,114.73,512,256.23,512C397.263,512,512,397.263,512,256.23L512,256.23z" fill="#0D2636" fill-rule="evenodd"/></g></svg>
+</a>
+
+<p>
+  Powered by <a href="https://github.com/Dalgona/Serum">Serum</a> v1.5.1,
+  with <a href="https://github.com/Dalgona/serum-theme-essence">Essence</a> theme
+</p>
+
+      </footer>
+    </div>
+
+    <script src="/assets/js/prism.js"></script>
+  </body>
+</html>
+<script>
+const ws_url = "ws://" + location.host + "/serum_live_reloader";
+var ws;
+
+connect();
+
+function connect() {
+  ws = new WebSocket(ws_url);
+  ws.onmessage = onMessage;
+  ws.onclose = onClose;
+}
+
+function onMessage(e) {
+  if (e.data === "reload") {
+    location.reload();
+  }
+}
+
+function onClose(e) {
+  console.warn("WebSocket disconnected from server. Reconnecting in 10 seconds.");
+  setTimeout(connect, 10000)
+}
+</script>

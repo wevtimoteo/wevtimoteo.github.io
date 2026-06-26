@@ -1,0 +1,114 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>Autorização com Policies no Ash: menos if espalhado, mais regra declarativa - wevtimoteo</title>
+
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+
+    <style>
+      img {
+        max-width: 800px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header id="top">
+        <h1><a href="/">wevtimoteo</a></h1>
+        <p>kairos _ sharing _ tech _ learning _ kaizen _ path</p>
+      </header>
+
+      <nav>
+        
+<ul>
+  <li><a href="/posts">Posts</a></li>
+  <li><a href="/about.html">About</a></li>
+</ul>
+
+      </nav>
+
+      <hr />
+
+      <main><h1 id="autorização-com-policies-no-ash:-menos-if-espalhado,-mais-regra-declarativa">Autorização com Policies no Ash: menos if espalhado, mais regra declarativa</h1><p>Posted on Monday, 29 Sep 2025 by Weverton Timoteo</p><p>Tags:</p><ul><li><a href="/tags/ash">ash</a></li><li><a href="/tags/ashframework">ashframework</a></li><li><a href="/tags/elixir">elixir</a></li><li><a href="/tags/phoenix">phoenix</a></li><li><a href="/tags/ptbr">ptbr</a></li></ul><p>Autorização é uma daquelas partes da aplicação que parecem simples no começo e viram dívida rápido.</p><p>O primeiro <code class="inline">if current_user.admin?</code> parece inofensivo. Depois aparece um <code class="inline">if user_id == record.user_id</code> em uma LiveView. Depois uma API precisa repetir a regra. Depois um worker roda sem usuário, mas precisa executar uma ação administrativa. Depois alguém adiciona multi-tenancy e toda query precisa lembrar do <code class="inline">organization_id</code>.</p><p>O problema não é usar <code class="inline">if</code>. O problema é autorização virar uma coleção de decisões espalhadas.</p><p>No <a href="https://ash-hq.org/">Ash Framework</a>, policies tentam trazer essas decisões para perto do domínio. Em vez de cada interface decidir sozinha quem pode fazer o quê, o Resource declara regras de autorização que se aplicam às actions.</p><h2 id="autorização-não-pertence-só-ao-controller">Autorização não pertence só ao controller</h2><p>Em aplicações Phoenix, é comum ver autorização em controllers:</p><pre><code class="elixir">def update(conn, %{&quot;id&quot; =&gt; id, &quot;product&quot; =&gt; params}) do
+  product = Catalog.get_product!(id)
+
+  if can_edit_product?(conn.assigns.current_user, product) do
+    Catalog.update_product(product, params)
+  else
+    {:error, :forbidden}
+  end
+end</code></pre><p>Isso é direto e fácil de entender. O problema é que quase nenhuma aplicação moderna tem apenas controller.</p><p>Você pode ter LiveView, API JSON, GraphQL, jobs, imports, webhooks, tarefas administrativas e scripts internos. Se a regra mora somente na interface, cada nova entrada precisa lembrar de reaplicá-la.</p><p>E autorização esquecida raramente falha de forma barulhenta. Muitas vezes, ela só vaza dado.</p><h2 id="policies-como-contrato-do-domínio">Policies como contrato do domínio</h2><p>Ash trata autorização como parte do contrato do Resource. As <a href="https://hexdocs.pm/ash/policies.html">policies</a> são declaradas perto das actions e podem levar em conta o actor, a action, o registro e o contexto.</p><p>Em vez de pensar “essa tela permite isso?”, a pergunta vira:</p><p>“Este actor pode executar esta action neste Resource?”</p><p>Essa mudança é importante porque a resposta deixa de depender da interface.</p><p>Um admin pode editar produtos pelo painel. Um usuário comum talvez só possa ver produtos ativos. Um membro de uma organização só pode acessar registros daquela organização. Um sistema interno pode ter permissões diferentes, mas ainda assim explícitas.</p><p>O valor está em centralizar a regra no domínio, não em esconder a complexidade.</p><h2 id="exemplos-de-regras-comuns">Exemplos de regras comuns</h2><p>Policies ficam interessantes quando o sistema começa a ter regras como:</p><ul><li>administradores podem executar qualquer action;
+</li><li>usuários autenticados podem ler dados públicos;
+</li><li>o dono de um registro pode editar alguns campos;
+</li><li>membros de uma organização só veem dados daquela organização;
+</li><li>contas suspensas não podem criar registros novos;
+</li><li>ações destrutivas exigem papel específico;
+</li><li>workers internos podem executar ações sem passar pela interface web.
+</li></ul><p>Todas essas regras podem ser escritas manualmente com funções e condicionais. Ash não inventa autorização. Ele oferece um lugar e um modelo para declarar autorização.</p><p>Isso ajuda a manter consistência quando o mesmo domínio é consumido por mais de uma interface.</p><h2 id="menos-autorização-acidental">Menos autorização acidental</h2><p>Um problema comum em aplicações com contexts é a diferença entre “função pública” e “função segura”.</p><p>Você tem <code class="inline">Catalog.update_product/2</code>. Essa função aplica autorização? Depende. Talvez ela espere que o controller já tenha verificado. Talvez exista outra função <code class="inline">update_product_as_admin/3</code>. Talvez um worker use direto porque “é interno”.</p><p>Com o tempo, a equipe precisa decorar quais funções são seguras em quais contextos.</p><p>Ash tenta reduzir esse espaço de erro ao fazer a action passar por um fluxo conhecido. Se a action tem policies, a autorização acompanha a operação. A chamada precisa informar o actor ou deixar claro que está rodando em um contexto especial.</p><p>Isso não garante segurança automaticamente. Você ainda precisa escrever regras corretas, testar cenários e evitar atalhos perigosos. Mas reduz a chance de cada interface inventar sua própria interpretação da regra.</p><h2 id="actor-e-contexto">Actor e contexto</h2><p>O actor é a entidade que está tentando executar uma action. Em muitos sistemas, será um usuário. Em outros, pode ser uma conta de serviço, um token de API, uma integração ou um processo interno.</p><p>Pensar em actor ajuda a separar autenticação de autorização.</p><p>Autenticação responde: “quem é você?”.</p><p>Autorização responde: “o que você pode fazer?”.</p><p>Policies vivem no segundo mundo. Elas podem usar informações do actor para decidir se a action deve continuar. Um actor com papel <code class="inline">:admin</code> pode passar em uma regra. Um actor pertencente à mesma organização do registro pode passar em outra. Um actor sem autenticação pode ter acesso apenas a leituras públicas.</p><p>Essa distinção evita um erro comum: achar que, porque alguém está logado, pode executar qualquer operação que a interface mostra.</p><h2 id="regras-de-leitura-também-importam">Regras de leitura também importam</h2><p>Quando se fala em autorização, muita gente pensa primeiro em create, update e destroy. Mas leitura costuma ser a parte mais sensível.</p><p>Quem pode listar registros? Quem pode ver detalhes? Uma query administrativa pode retornar dados de outras organizações? Um endpoint público pode carregar relacionamentos privados? Uma página de busca respeita os mesmos filtros da tela principal?</p><p>Policies em Ash também ajudam nessa área, porque read actions fazem parte do Resource. A leitura <code class="inline">:active</code>, <code class="inline">:visible_to_customer</code> ou <code class="inline">:for_admin</code> pode ter regras próprias.</p><p>Isso é especialmente importante em multi-tenancy. Esquecer um filtro em uma query pode expor dados de outro tenant. Quando a regra fica no domínio, ela deixa de depender de cada chamada lembrar do filtro manualmente.</p><h2 id="cuidado-com-regras-mágicas">Cuidado com regras mágicas</h2><p>Policies não devem virar uma caixa preta.</p><p>Se ninguém consegue entender por que uma action foi permitida ou negada, a equipe só trocou <code class="inline">if</code> espalhado por confusão centralizada. O objetivo é clareza, não mistério.</p><p>Algumas práticas ajudam:</p><ul><li>manter policies próximas das actions;
+</li><li>usar nomes de actions que expliquem a intenção;
+</li><li>evitar regras genéricas demais;
+</li><li>escrever testes para casos permitidos e negados;
+</li><li>documentar exceções reais, não exceções convenientes.
+</li></ul><p>Autorização é regra de negócio. Ela merece o mesmo cuidado que cálculo de preço, cobrança ou envio de convite.</p><h2 id="quando-policies-fazem-mais-diferença">Quando policies fazem mais diferença</h2><p>Para um blog simples com área administrativa pequena, talvez policies pareçam excesso. Um context bem escrito e algumas verificações claras podem ser suficientes.</p><p>Policies começam a fazer diferença quando a aplicação tem:</p><ul><li>múltiplos papéis de usuário;
+</li><li>organização, conta, workspace ou tenant;
+</li><li>painel administrativo e API pública;
+</li><li>workers que executam ações do domínio;
+</li><li>dados sensíveis;
+</li><li>regras diferentes por action;
+</li><li>necessidade de auditar quem fez o quê.
+</li></ul><p>Nesses cenários, autorização deixa de ser detalhe de interface e vira parte central do sistema.</p><h2 id="fechando">Fechando</h2><p>Policies no Ash não removem a necessidade de pensar em segurança. Elas apenas colocam a conversa no lugar certo: o domínio.</p><p>Em vez de espalhar <code class="inline">if current_user.admin?</code> por controllers, LiveViews e services, você declara quem pode executar quais actions nos Resources. Isso torna a regra mais visível, mais reaproveitável e mais difícil de esquecer.</p><p>O ganho real não é escrever menos código. É reduzir autorização acidental e transformar permissões em parte explícita do contrato da aplicação.</p></main>
+
+      <hr />
+
+      <footer>
+        
+<a href="https://dev.to/wevtimoteo" target="_blank" style="float: right">
+  <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Weverton Timoteo's DEV Profile" height="30" width="30">
+</a>
+
+<a href="https://github.com/wevtimoteo/wevtimoteo.github.io" target="_blank" style="float: right;margin-right: 10px">
+  <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 30 30" height="30px" id="Layer_1" version="1.1" viewBox="0 0 512 512" width="30px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path clip-rule="evenodd" d="M296.133,354.174c49.885-5.891,102.942-24.029,102.942-110.192   c0-24.49-8.624-44.448-22.67-59.869c2.266-5.89,9.515-28.114-2.734-58.947c0,0-18.139-5.898-60.759,22.669   c-18.139-4.983-38.09-8.163-56.682-8.163c-19.053,0-39.011,3.18-56.697,8.163c-43.082-28.567-61.22-22.669-61.22-22.669   c-12.241,30.833-4.983,53.057-2.718,58.947c-14.061,15.42-22.677,35.379-22.677,59.869c0,86.163,53.057,104.301,102.942,110.192   c-6.344,5.452-12.241,15.873-14.507,30.387c-12.702,5.438-45.808,15.873-65.758-18.592c0,0-11.795-21.31-34.012-22.669   c0,0-22.224-0.453-1.813,13.592c0,0,14.96,6.812,24.943,32.653c0,0,13.6,43.089,76.179,29.48v38.543   c0,5.906-4.53,12.702-15.865,10.89C96.139,438.977,32.2,354.626,32.2,255.77c0-123.807,100.216-224.022,224.03-224.022   c123.347,0,224.023,100.216,223.57,224.022c0,98.856-63.946,182.754-152.828,212.688c-11.342,2.266-15.873-4.53-15.873-10.89   V395.45C311.1,374.577,304.288,360.985,296.133,354.174L296.133,354.174z M512,256.23C512,114.73,397.263,0,256.23,0   C114.73,0,0,114.73,0,256.23C0,397.263,114.73,512,256.23,512C397.263,512,512,397.263,512,256.23L512,256.23z" fill="#0D2636" fill-rule="evenodd"/></g></svg>
+</a>
+
+<p>
+  Powered by <a href="https://github.com/Dalgona/Serum">Serum</a> v1.5.1,
+  with <a href="https://github.com/Dalgona/serum-theme-essence">Essence</a> theme
+</p>
+
+      </footer>
+    </div>
+
+    <script src="/assets/js/prism.js"></script>
+  </body>
+</html>
+<script>
+const ws_url = "ws://" + location.host + "/serum_live_reloader";
+var ws;
+
+connect();
+
+function connect() {
+  ws = new WebSocket(ws_url);
+  ws.onmessage = onMessage;
+  ws.onclose = onClose;
+}
+
+function onMessage(e) {
+  if (e.data === "reload") {
+    location.reload();
+  }
+}
+
+function onClose(e) {
+  console.warn("WebSocket disconnected from server. Reconnecting in 10 seconds.");
+  setTimeout(connect, 10000)
+}
+</script>
