@@ -4,6 +4,8 @@ date: 2025-10-20 09:00:00
 tags: ash, ashframework, elixir, phoenix, authentication, ptbr
 ---
 
+No [post anterior da série](/posts/2025-10-13-multi-tenancy-com-ash-base-para-saas-em-elixir.html), falei sobre multi-tenancy com Ash como base para aplicações SaaS em Elixir.
+
 Autenticação é uma parte estranha das aplicações web. Todo produto precisa, quase todo framework oferece algum caminho, e mesmo assim é fácil errar detalhes.
 
 Usuário, senha, hash, confirmação de e-mail, reset de senha, sessão, token, login social, API key, expiração, revogação. Nada disso é exatamente regra de negócio do produto, mas tudo isso sustenta o acesso ao produto.
@@ -138,10 +140,12 @@ Se a aplicação é Phoenix simples, com poucos requisitos e sem Ash no domínio
 
 Como quase sempre, a resposta depende do custo de adoção. Ash Authentication brilha quando ele reduz divergência e encaixa em uma arquitetura Ash já existente.
 
-## Fechando
+## Concluindo
 
 Ash Authentication não transforma autenticação em um detalhe irrelevante. Login, sessão e token continuam sendo partes sensíveis da aplicação.
 
 O que ele oferece é uma forma de declarar autenticação junto ao domínio Ash, conectando usuário, estratégia, sessão e actor de maneira mais padronizada.
 
 Para aplicações Phoenix que já apostam em Ash, isso pode reduzir bastante código repetido e deixar mais clara a linha entre identidade e permissão.
+
+No [próximo post da série](/posts/2025-10-27-calculations-e-aggregates-no-ash.html), vou entrar em calculations e aggregates para modelar dados derivados no domínio.

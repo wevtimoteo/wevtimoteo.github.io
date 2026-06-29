@@ -4,6 +4,8 @@ date: 2025-10-13 09:00:00
 tags: ash, ashframework, elixir, phoenix, multitenancy, saas, ptbr
 ---
 
+No [post anterior da série](/posts/2025-10-06-ash-phoenix-liveview-formularios-validacoes-crud.html), conectei Ash com Phoenix LiveView em formulários, validações e CRUD.
+
 Multi-tenancy é um daqueles temas que parecem simples até a aplicação começar a crescer.
 
 No começo, "tenant" parece só um `organization_id` em algumas tabelas. Você adiciona o campo, coloca um filtro nas queries principais e segue. Depois aparecem convites, papéis, integrações, relatórios, webhooks, imports, painel administrativo e jobs. Aos poucos, a pergunta deixa de ser "tem organization_id?" e vira "todas as partes do sistema respeitam o tenant certo?".
@@ -79,7 +81,7 @@ Em um SaaS real, tenant aparece em vários lugares:
 
 Se o tenant é apenas um parâmetro solto em queries, cada uma dessas áreas precisa repetir a mesma regra. Quando o tenant faz parte do contrato do domínio, fica mais natural exigir essa informação em toda operação relevante.
 
-Isso também conversa com policies. Não basta a query filtrar por organização; o actor também precisa ter permissão dentro daquela organização. Multi-tenancy responde "qual espaço de dados?". Autorização responde "quem pode fazer o quê dentro desse espaço?".
+Isso também conversa com policies. Não basta a query filtrar por organização; o actor também precisa ter permissão dentro daquela organização. Multi-tenancy responde "qual espaço de dados?". Autorização responde "quem pode fazer o que dentro desse espaço?".
 
 As duas coisas se complementam.
 
@@ -138,10 +140,12 @@ Eu testaria pelo menos:
 
 Esses testes não são burocracia. Eles protegem uma das promessas básicas de qualquer SaaS: dados de um cliente não aparecem para outro.
 
-## Fechando
+## Concluindo
 
 Multi-tenancy com Ash é interessante porque traz o tenant para o contrato do domínio.
 
 Em vez de depender de filtros manuais espalhados, você declara que certos Resources pertencem a um tenant e executa actions dentro desse contexto. Isso não remove a necessidade de boa modelagem, mas reduz uma fonte comum de erro.
 
 Para SaaS em Elixir, esse é um dos pontos em que Ash pode pagar o custo da curva de aprendizado. Quando isolamento de dados vira regra central do produto, faz sentido que essa regra apareça no domínio, não só em queries soltas.
+
+No [próximo post da série](/posts/2025-10-20-ash-authentication-na-pratica-login-usuario-sessao.html), vou falar sobre Ash Authentication na prática: login, usuário e sessão.

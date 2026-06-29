@@ -2,6 +2,7 @@
 title: Tomando notas como desenvolvedor de software
 date: 2023-09-23 00:50:00
 tags: notes
+series: adotando-pratica-de-notas
 ---
 
 Me arrependo profundamente de não tomar notas mais cedo. As notas até existiam, mas geralmente eram coisas pontuais para executar uma tarefa ou algo interessante que encontrei que meses depois eram só anotações "sem utilidade".

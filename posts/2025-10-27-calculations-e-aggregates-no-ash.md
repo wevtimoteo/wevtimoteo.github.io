@@ -4,6 +4,8 @@ date: 2025-10-27 09:00:00
 tags: ash, ashframework, elixir, phoenix, ptbr
 ---
 
+No [post anterior da série](/posts/2025-10-20-ash-authentication-na-pratica-login-usuario-sessao.html), falei sobre Ash Authentication na prática: login, usuário e sessão.
+
 Nem todo dado importante nasce como coluna no banco.
 
 Um nome completo pode vir de `first_name` e `last_name`. O total de um pedido pode vir da soma dos itens. O status de uma assinatura pode depender de datas, pagamentos e cancelamentos. A quantidade de comentários de um post pode vir de um relacionamento.
@@ -146,10 +148,12 @@ Eu evitaria quando o valor é puramente visual e usado em um único lugar. Nem t
 
 O critério é o mesmo de outras partes do Ash: se faz parte do contrato do domínio, vale modelar.
 
-## Fechando
+## Concluindo
 
 Calculations e aggregates ajudam a tratar dados derivados como cidadãos de primeira classe.
 
 Em vez de espalhar soma, contagem e formatação semântica por templates, APIs e contexts, você coloca a regra perto do Resource. Isso melhora consistência e torna o domínio mais legível.
 
 O ganho não é só conveniência. É clareza. Quando `full_name`, `orders_count` ou `total_spent` têm um dono, fica mais fácil entender o que a aplicação quer dizer com esses valores.
+
+No [próximo post da série](/posts/2025-11-03-vale-a-pena-usar-ash-em-producao.html), vou fechar com uma pergunta prática: vale a pena usar Ash em produção?
