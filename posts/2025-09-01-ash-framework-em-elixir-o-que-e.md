@@ -98,7 +98,12 @@ defmodule MyApp.Catalog.Product do
   end
 
   actions do
-    defaults [:read, :destroy, create: [:name], update: [:name, :status]]
+    defaults [
+      :read,
+      :destroy,
+      create: [:name],
+      update: [:name, :status]
+    ]
   end
 end
 ```
@@ -113,7 +118,7 @@ A diferença é que o Domain não é apenas um módulo com funções públicas. 
 
 Autorização costuma ser uma das primeiras regras a se espalhar.
 
-Um `if current_user.admin?` no controller parece inofensivo. Depois aparece uma variação em uma LiveView. Depois um worker precisa ignorar a regra. Depois uma API pública precisa aplicar uma versão diferente. Em algum momento, entender quem pode fazer o quê exige buscar por condicionais em vários arquivos.
+Um `if current_user.admin?` no controller parece inofensivo. Depois aparece uma variação em uma LiveView. Depois um worker precisa ignorar a regra. Depois uma API pública precisa aplicar uma versão diferente. Em algum momento, entender quem pode fazer o que exige buscar por condicionais em vários arquivos.
 
 Ash oferece [Policies](https://hexdocs.pm/ash/policies.html) para declarar regras de autorização próximas do domínio. A ideia é que uma ação não seja apenas "executável", mas executável por alguém, em determinado contexto, sob determinadas condições.
 
@@ -139,7 +144,7 @@ Eu não olharia para Ash como algo obrigatório em todo projeto Elixir.
 
 Para uma aplicação pequena, com poucas tabelas e regras simples, Phoenix Contexts com Ecto podem ser mais diretos. Você cria schemas, changesets, funções bem nomeadas e segue a vida.
 
-Ash começa a ficar mais atraente quando aparecem sinais como:
+Ash começa a ficar mais atrativo quando aparecem sinais como:
 
 - múltiplas interfaces consumindo o mesmo domínio;
 - regras de autorização crescendo;
@@ -156,13 +161,13 @@ Nesses casos, a pergunta não é "Ash escreve menos código?". Às vezes sim, à
 
 Ash tem curva de aprendizado. Você precisa entender a DSL, o ciclo de vida das actions, a diferença entre changes e validations, como queries são preparadas, como policies são avaliadas, como domains organizam recursos e como as extensões se encaixam.
 
-Para quem vem de Phoenix e Ecto puros, isso pode parecer uma mudança grande. E é. O código deixa de ser apenas um conjunto de funções Elixir explícitas e passa a ter uma camada declarativa forte. Isso traz poder, mas também exige leitura de documentação, familiaridade com convenções e disciplina para não transformar o recurso em um arquivo difícil de navegar.
+Para quem usa Phoenix e Ecto diretamente, isso pode parecer uma mudança grande. E é. O código deixa de ser apenas um conjunto de funções Elixir explícitas e passa a ter uma camada declarativa forte. Isso traz poder, mas também exige leitura de documentação, familiaridade com convenções e disciplina para não transformar o recurso em um arquivo difícil de navegar.
 
 O ponto positivo é que Ash não tenta ser um mundo isolado. Ele conversa com o ecossistema Elixir: pode usar Ecto por baixo via AshPostgres, integrar com Phoenix, trabalhar com Oban, expor APIs e ainda permitir escapes quando uma parte do sistema precisa de algo mais manual.
 
 Para mim, essa é a forma mais saudável de avaliar Ash: não como mágica, mas como uma tentativa de dar mais estrutura para a camada de aplicação em Elixir.
 
-## Fechando
+## Concluindo
 
 Ash muda a forma de modelar aplicações porque desloca o centro do código.
 
@@ -170,4 +175,4 @@ Em vez de espalhar regras entre contexts, controllers, LiveViews, workers e APIs
 
 Isso não torna Ecto obsoleto, não torna Phoenix menos importante e não elimina decisões difíceis. Mas oferece uma alternativa interessante para aplicações onde o domínio começou a ficar maior do que o padrão tradicional estava conseguindo expressar com clareza.
 
-Nos próximos posts da série, vou comparar Ash com Phoenix Contexts, criar um primeiro Resource e entrar aos poucos em actions, policies, LiveView, multi-tenancy, autenticação, calculations e aggregates.
+No [próximo post da série](/posts/2025-09-08-ash-vs-ecto-contexts-quando-usar.html), vou comparar Ash com Phoenix Contexts. Depois, sigo com um primeiro Resource e entro aos poucos em actions, policies, LiveView, multi-tenancy, autenticação, calculations e aggregates.

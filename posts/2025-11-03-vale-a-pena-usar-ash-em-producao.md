@@ -4,6 +4,8 @@ date: 2025-11-03 09:00:00
 tags: ash, ashframework, elixir, phoenix, ptbr
 ---
 
+No [post anterior da série](/posts/2025-10-27-calculations-e-aggregates-no-ash.html), falei sobre calculations e aggregates no Ash para modelar dados derivados.
+
 Depois de falar sobre Resources, actions, policies, LiveView, multi-tenancy, autenticação, calculations e aggregates, sobra a pergunta mais importante:
 
 Vale a pena usar [Ash Framework](https://ash-hq.org/) em produção?

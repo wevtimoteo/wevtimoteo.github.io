@@ -8,4 +8,7 @@
     <% end %>
   </ul>
 <% end %>
+<%= if @page.extras["series"] == "adotando-pratica-de-notas" do %>
+  <%= render("series-adotando-pratica-de-notas", page: @page) %>
+<% end %>
 <%= @contents %>

@@ -4,13 +4,15 @@ date: 2025-09-08 09:00:00
 tags: ash, ashframework, elixir, phoenix, ecto, ptbr
 ---
 
+No [post anterior da série](/posts/2025-09-01-ash-framework-em-elixir-o-que-e.html), apresentei o problema que o Ash tenta resolver e por que ele muda a forma de modelar aplicações.
+
 Quando alguém começa a olhar para [Ash Framework](https://ash-hq.org/) vindo de [Phoenix](https://phoenixframework.org/) e [Ecto](https://hexdocs.pm/ecto/Ecto.html), uma pergunta aparece rápido: "isso substitui Phoenix Contexts?"
 
 A resposta curta é: não exatamente.
 
-Ash não é um substituto burro de Ecto, nem uma tentativa de apagar o padrão de contexts do Phoenix. Ele é uma camada declarativa de domínio. Isso muda bastante a comparação, porque Ecto e Ash não estão tentando resolver o mesmo problema no mesmo nível.
+Ash não é simplesmente um substituto para Ecto, nem uma tentativa de apagar o padrão de contexts do Phoenix. Ele é uma camada declarativa de domínio. Isso muda bastante a comparação, porque Ecto e Ash não estão tentando resolver o mesmo problema no mesmo nível.
 
-Ecto é excelente para falar com dados. Ele modela schemas, changesets, queries, migrations e integração com bancos relacionais. Phoenix Contexts são uma convenção para organizar uma área da aplicação e expor funções públicas para o restante do sistema.
+Ecto é excelente para lidar com persistência de dados. Ele modela schemas, changesets, queries, migrations e integração com bancos relacionais. Phoenix Contexts são uma convenção para organizar uma área da aplicação e expor funções públicas para o restante do sistema.
 
 Ash tenta responder outra pergunta: quais recursos existem no meu domínio, quais ações são permitidas, quais regras cada ação precisa respeitar e como essas regras podem ser reaproveitadas por diferentes interfaces?
 
@@ -45,7 +47,7 @@ Nesse ponto, o context ainda funciona, mas o contrato do domínio começa a depe
 
 ## Onde Ecto brilha
 
-Eu continuaria usando Ecto puro, com Phoenix Contexts, quando a aplicação tem características como:
+Eu continuaria usando Ecto com Phoenix Contexts quando a aplicação tem características como:
 
 - poucas entidades;
 - regras de autorização simples;
@@ -55,7 +57,7 @@ Eu continuaria usando Ecto puro, com Phoenix Contexts, quando a aplicação tem 
 - equipe confortável com SQL e changesets explícitos;
 - domínio que muda pouco.
 
-Nesses casos, Ash pode parecer pesado. Não porque seja ruim, mas porque você passa a aprender uma DSL, entender actions, domains, policies, resources, preparations e extensions para resolver algo que talvez já estivesse simples.
+Nesses casos, Ash pode adicionar mais estrutura do que a aplicação precisa. Não porque seja ruim, mas porque você passa a aprender uma DSL, entender actions, domains, policies, resources, preparations e extensions para resolver algo que talvez já estivesse simples.
 
 O custo de uma abstração só vale quando ela compra algo real.
 
@@ -83,15 +85,17 @@ Ash tenta concentrar isso em Resources e Actions. Uma ação deixa de ser "uma f
 
 ## Ash não elimina Ecto
 
-Um ponto importante: Ash não significa abandonar Ecto.
+Um ponto importante: usar Ash não significa deixar o Ecto de lado.
 
 Quando você usa Ash com Postgres, normalmente entra o [AshPostgres](https://hexdocs.pm/ash_postgres/) como data layer. Ecto continua existindo por baixo em boa parte da integração com banco. Migrations, tipos, constraints e SQL continuam relevantes.
+
+O que muda na prática é que você não fica com aquele arquivo de schema Ecto gerado à parte como centro da estrutura dos dados. Em Ash, atributos, relacionamentos e ações são declarados no Resource. O AshPostgres usa essa declaração para integrar com o banco, em vez de você manter um schema Ecto separado como centro do modelo.
 
 A diferença é que Ecto deixa de ser a única camada onde o domínio aparece.
 
 Em vez de espalhar regra entre schema, changeset, context e controller, você declara parte importante do comportamento no Resource. O Resource pode ter atributos, relacionamentos, actions, validações, policies, calculations e aggregates.
 
-Isso não é "Ecto, só que mais mágico". É outra forma de organizar a aplicação.
+Na prática, Ash muda onde parte das regras vive e como elas são descritas. É outra forma de organizar a aplicação.
 
 ## Comparando o formato mental
 
@@ -105,11 +109,11 @@ Com Ash, a pergunta muda:
 
 Essa diferença parece pequena, mas muda o desenho da aplicação.
 
-Em Ecto puro, a fronteira do domínio é uma convenção. Em Ash, essa fronteira vira uma estrutura declarativa. Ela fica mais visível para ferramentas, extensões e outras partes do código.
+Com Ecto e Phoenix Contexts, essa fronteira depende principalmente da organização que o time mantém no código. Em Ash, parte dessa fronteira passa a ser declarada na estrutura do Resource. Ela fica mais visível para ferramentas, extensões e outras partes do código.
 
 ## O tradeoff da DSL
 
-Ash tem DSL. Isso pode ser ótimo ou irritante, dependendo do problema.
+Ash usa uma DSL declarativa para descrever recursos, ações e regras. Isso pode ser ótimo ou irritante, dependendo do problema.
 
 O lado bom é que uma DSL bem pensada reduz repetição e torna certas intenções óbvias. Ao ler um Resource, você enxerga rapidamente quais ações existem, quais atributos são públicos, quais validações se aplicam e quais policies protegem a operação.
 
@@ -121,13 +125,13 @@ Se a equipe não compra essa forma de pensar, Ash pode virar uma camada que pouc
 
 Eu escolheria Phoenix Contexts com Ecto quando o sistema é simples, o time quer máxima explicitude e o domínio não tem muita variação de operação.
 
-Também escolheria Ecto puro quando a aplicação é muito específica em SQL, tem pouca necessidade de exposição de APIs e não ganha muito com uma representação declarativa do domínio.
+Também escolheria Ecto com Phoenix Contexts quando a aplicação é muito específica em SQL, tem pouca necessidade de exposição de APIs e não ganha muito com uma representação declarativa do domínio.
 
 Eu consideraria Ash quando a aplicação tem muitas regras transversais: autorização, multi-tenancy, APIs, formulários, workers, imports, actions diferentes para o mesmo recurso e necessidade de manter tudo isso consistente.
 
-Ash também fica mais atraente quando o domínio precisa ser consumido por mais de uma interface. Uma LiveView, uma API JSON, GraphQL e um job interno podem chamar ações com o mesmo contrato, em vez de cada interface reconstruir a lógica do seu jeito.
+Ash também fica mais atrativo quando o domínio precisa ser consumido por mais de uma interface. Uma LiveView, uma API JSON, GraphQL e um job interno podem chamar ações com o mesmo contrato, em vez de cada interface reconstruir a lógica do seu jeito.
 
-## Fechando
+## Concluindo
 
 A comparação mais justa não é "Ash ou Ecto?".
 
@@ -136,3 +140,5 @@ A comparação real é: "Phoenix Contexts com Ecto continuam dando conta do cont
 Se a resposta for "ainda está simples", fique com Ecto e Contexts. É uma escolha madura.
 
 Se a resposta for "estou repetindo autorização, filtros, validações e operações em lugares diferentes", Ash merece uma avaliação séria. Não por hype, mas porque talvez o problema já tenha deixado de ser persistência e passado a ser modelagem de domínio.
+
+No [próximo post da série](/posts/2025-09-15-criando-seu-primeiro-resource-no-ash-framework.html), vou criar um primeiro Resource no Ash para mostrar como esse contrato aparece no código.

@@ -4,13 +4,13 @@ date: 2025-09-15 09:00:00
 tags: ash, ashframework, elixir, phoenix, ptbr
 ---
 
-Nos posts anteriores, falei sobre o problema que o [Ash Framework](https://ash-hq.org/) tenta resolver e comparei Ash com o caminho mais comum em Phoenix: Contexts com [Ecto](https://hexdocs.pm/ecto/Ecto.html).
+No [post anterior da série](/posts/2025-09-08-ash-vs-ecto-contexts-quando-usar.html), comparei Ash com o caminho mais comum em Phoenix: Contexts com [Ecto](https://hexdocs.pm/ecto/Ecto.html).
 
 Agora dá para descer um nível e olhar para a peça mais importante do Ash: o Resource.
 
-Um Resource é a forma como Ash modela um conceito do domínio. Pode ser `Product`, `Customer`, `Invoice`, `Task`, `Post`, `Organization`, `Subscription`. O nome não importa tanto quanto a ideia: um Resource não é apenas uma tabela ou uma struct. Ele descreve atributos, relacionamentos, ações, validações e outras regras ligadas àquele conceito.
+Um Resource é a forma como Ash modela um conceito do domínio. Pode ser `Product`, `Customer`, `Invoice`, `Task`, `Post`, `Organization`, `Subscription`. O nome não importa tanto quanto a ideia: um Resource não é apenas uma tabela ou uma struct. Ele descreve atributos, relacionamentos, ações, validações e outras regras ligadas a esse conceito.
 
-Se você vem de Ecto, a tentação é pensar: "Resource é o schema do Ash". Essa comparação ajuda no começo, mas fica incompleta rápido. Um schema Ecto descreve dados e parte da validação de entrada. Um Resource Ash também descreve quais operações existem para aquele dado.
+Se você usa Ecto, a tentação é pensar: "Resource é o schema do Ash". Essa comparação ajuda no começo, mas fica incompleta rapidamente. Um schema Ecto descreve dados e parte da validação de entrada. Um Resource Ash também descreve quais operações existem para aquele dado.
 
 É essa diferença que faz o Resource ser interessante.
 
@@ -45,7 +45,12 @@ defmodule MyApp.Catalog.Product do
   end
 
   actions do
-    defaults [:read, :destroy, create: [:name, :description], update: [:name, :description, :status]]
+    defaults [
+      :read,
+      :destroy,
+      create: [:name, :description],
+      update: [:name, :description, :status]
+    ]
   end
 end
 ```
@@ -108,13 +113,13 @@ Mas o Domain em Ash não é apenas um módulo com funções soltas. Ele conhece 
 
 Um domínio de catálogo poderia agrupar `Product`, `Category`, `PriceList` e `InventoryItem`. Um domínio de contas poderia agrupar `User`, `Organization`, `Membership` e `Invitation`.
 
-Essa organização ajuda a manter o mapa mental da aplicação. Recursos relacionados ficam próximos, sem transformar um único módulo em uma gaveta de funções.
+Essa organização ajuda a manter o mapa mental da aplicação. Resources relacionados ficam próximos, sem transformar um único módulo em uma gaveta de funções.
 
 ## O que ainda não apareceu
 
 Um Resource real pode ter muito mais coisa:
 
-- relacionamentos;
+- relationships;
 - identities;
 - validations;
 - changes;
@@ -146,11 +151,11 @@ def archive_product(product) do
 end
 ```
 
-Isso é simples e correto. Com Ash, a ideia é que `archive` possa ser uma action do Resource. Assim, autorização, validação e outros comportamentos podem se ligar a essa operação nomeada.
+Essa abordagem funciona bem. Com Ash, a ideia é que `archive` possa ser uma action do Resource. Assim, autorização, validação e outros comportamentos podem se ligar a essa operação nomeada.
 
 Não é que uma abordagem seja sempre melhor. A diferença é onde o contrato aparece.
 
-## Fechando
+## Concluindo
 
 Criar um Resource no Ash é começar a desenhar o domínio de forma declarativa.
 
@@ -158,4 +163,4 @@ O exemplo de `Product` mostra só o básico, mas já apresenta a mudança de per
 
 Quando a aplicação é pequena, isso pode parecer apenas outra forma de escrever o que você já faria com Ecto. Quando o domínio cresce, porém, ter esse contrato explícito ajuda bastante.
 
-No próximo post, vou entrar em actions, changesets e queries com mais detalhe, porque é ali que o Resource deixa de ser apenas uma descrição e começa a virar a API real do domínio.
+No [próximo post da série](/posts/2025-09-22-actions-changesets-e-queries-no-ash.html), vou entrar em actions, changesets e queries com mais detalhe, porque é ali que o Resource deixa de ser apenas uma descrição e começa a virar a API real do domínio.

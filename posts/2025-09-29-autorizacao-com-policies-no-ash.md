@@ -4,13 +4,15 @@ date: 2025-09-29 09:00:00
 tags: ash, ashframework, elixir, phoenix, ptbr
 ---
 
+No [post anterior da série](/posts/2025-09-22-actions-changesets-e-queries-no-ash.html), falei sobre actions, changesets e queries como contrato do domínio.
+
 Autorização é uma daquelas partes da aplicação que parecem simples no começo e viram dívida rápido.
 
 O primeiro `if current_user.admin?` parece inofensivo. Depois aparece um `if user_id == record.user_id` em uma LiveView. Depois uma API precisa repetir a regra. Depois um worker roda sem usuário, mas precisa executar uma ação administrativa. Depois alguém adiciona multi-tenancy e toda query precisa lembrar do `organization_id`.
 
 O problema não é usar `if`. O problema é autorização virar uma coleção de decisões espalhadas.
 
-No [Ash Framework](https://ash-hq.org/), policies tentam trazer essas decisões para perto do domínio. Em vez de cada interface decidir sozinha quem pode fazer o quê, o Resource declara regras de autorização que se aplicam às actions.
+No [Ash Framework](https://ash-hq.org/), policies tentam trazer essas decisões para perto do domínio. Em vez de cada interface decidir sozinha quem pode fazer o que, o Resource declara regras de autorização que se aplicam às actions.
 
 ## Autorização não pertence só ao controller
 
@@ -132,10 +134,12 @@ Policies começam a fazer diferença quando a aplicação tem:
 
 Nesses cenários, autorização deixa de ser detalhe de interface e vira parte central do sistema.
 
-## Fechando
+## Concluindo
 
 Policies no Ash não removem a necessidade de pensar em segurança. Elas apenas colocam a conversa no lugar certo: o domínio.
 
 Em vez de espalhar `if current_user.admin?` por controllers, LiveViews e services, você declara quem pode executar quais actions nos Resources. Isso torna a regra mais visível, mais reaproveitável e mais difícil de esquecer.
 
 O ganho real não é escrever menos código. É reduzir autorização acidental e transformar permissões em parte explícita do contrato da aplicação.
+
+No [próximo post da série](/posts/2025-10-06-ash-phoenix-liveview-formularios-validacoes-crud.html), vou conectar Ash com Phoenix LiveView em formulários, validações e CRUD.

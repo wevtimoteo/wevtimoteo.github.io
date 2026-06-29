@@ -2,6 +2,7 @@
 title: Anotando: Plugins da comunidade que utilizo no Obsidian
 date: 2023-10-09 12:00:00
 tags: notes
+series: adotando-pratica-de-notas
 ---
 
 Na [postagem passada](/posts/2023-09-24-anotando-plugins-embutidos-que-utilizo-no-obsidian.html), eu mostrei quais plugins embutidos do [Obsidian](https://obsidian.md) eu deixo ligado e porquê. Agora é a hora de começar a montar o restante do fluxo de anotações utilizando os plugins da [comunidade](https://obsidian.md/community).

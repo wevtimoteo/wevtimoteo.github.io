@@ -4,6 +4,8 @@ date: 2025-09-22 09:00:00
 tags: ash, ashframework, elixir, phoenix, ptbr
 ---
 
+No [post anterior da série](/posts/2025-09-15-criando-seu-primeiro-resource-no-ash-framework.html), criei um primeiro Resource no Ash e mostrei como atributos e actions começam a aparecer juntos.
+
 Quando começamos a usar [Ash](https://ash-hq.org/), é comum prestar atenção primeiro nos Resources. Eles parecem a parte mais visível: atributos, relacionamentos, validações e configurações ficam todos ali.
 
 Mas o ponto em que Ash realmente começa a mudar a modelagem da aplicação é nas actions.
@@ -20,7 +22,12 @@ Um Resource pode expor ações padrão:
 
 ```elixir
 actions do
-  defaults [:read, :destroy, create: [:name], update: [:name, :status]]
+  defaults [
+    :read,
+    :destroy,
+    create: [:name],
+    update: [:name, :status]
+  ]
 end
 ```
 
@@ -162,7 +169,7 @@ Uma boa pergunta é: "essa operação teria o mesmo nome se eu explicasse o sist
 
 Se sim, provavelmente vale uma action. Se não, talvez seja apenas um detalhe de interface ou uma preparação interna.
 
-## Fechando
+## Concluindo
 
 Actions, changesets e queries são o ponto em que Ash começa a mostrar seu valor além da estrutura.
 
@@ -170,4 +177,4 @@ Actions nomeiam operações. Changesets representam tentativas de executar essas
 
 Isso não elimina a necessidade de pensar em arquitetura. Mas ajuda a tirar regras importantes de lugares espalhados e trazê-las para uma API mais explícita.
 
-No próximo post, vou falar sobre authorization policies, uma das partes em que essa abordagem declarativa fica ainda mais útil.
+No [próximo post da série](/posts/2025-09-29-autorizacao-com-policies-no-ash.html), vou falar sobre authorization policies, uma das partes em que essa abordagem declarativa fica ainda mais útil.

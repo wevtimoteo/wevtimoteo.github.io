@@ -10,6 +10,7 @@
     <link rel="icon" href="<%= asset("images/favicon.ico") %>" type="image/x-icon">
 
     <link rel="stylesheet" href="<%= asset("css/style.css") %>">
+    <link rel="stylesheet" href="<%= asset("css/site.css") %>">
     <link rel="stylesheet" href="<%= asset("css/prism.css") %>">
 
     <style>

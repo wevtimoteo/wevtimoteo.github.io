@@ -1,0 +1,44 @@
+<%
+  page = @args[:page]
+
+  posts = [
+    %{
+      number: 1,
+      title: "Tomando notas como desenvolvedor de software",
+      url: post("2023-09-23-tomando-notas-como-desenvolvedor-de-software")
+    },
+    %{
+      number: 2,
+      title: "Anotando: Plugins embutidos que utilizo no Obsidian",
+      url: post("2023-09-24-anotando-plugins-embutidos-que-utilizo-no-obsidian")
+    },
+    %{
+      number: 3,
+      title: "Anotando: Plugins da comunidade que utilizo no Obsidian",
+      url: post("2023-10-09-anotando-plugins-da-comunidade-que-utilizo-no-obsidian")
+    }
+  ]
+%>
+
+<nav class="post-series" aria-labelledby="post-series-adotando-pratica-de-notas-title">
+  <h2 id="post-series-adotando-pratica-de-notas-title">Adotando prática de notas (3 partes)</h2>
+  <ol>
+    <%= for item <- posts do %>
+      <% current? = item.url == page.url %>
+      <li class="post-series__item<%= if current?, do: " is-current", else: "" %>">
+        <%= if current? do %>
+          <span class="post-series__row" aria-current="page">
+        <% else %>
+          <a class="post-series__row" href="<%= item.url %>">
+        <% end %>
+            <span class="post-series__number"><%= item.number %></span>
+            <span class="post-series__title"><%= item.title %></span>
+        <%= if current? do %>
+          </span>
+        <% else %>
+          </a>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</nav>

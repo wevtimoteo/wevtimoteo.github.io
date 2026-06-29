@@ -2,6 +2,7 @@
 title: Anotando: Plugins embutidos que utilizo no Obsidian
 date: 2023-09-24 03:00:00
 tags: notes
+series: adotando-pratica-de-notas
 ---
 
 Na [postagem passada](https://wevtimoteo.github.io/posts/2023-09-23-tomando-notas-como-desenvolvedor-de-software.html) eu expliquei como iniciei minha jornada em tomar notas, mas não falei muito do app ([Obsidian](https://obsidian.md)) e quais minhas configurações e plugins.

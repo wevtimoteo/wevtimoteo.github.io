@@ -4,6 +4,8 @@ date: 2025-10-06 09:00:00
 tags: ash, ashframework, elixir, phoenix, liveview, ptbr
 ---
 
+No [post anterior da série](/posts/2025-09-29-autorizacao-com-policies-no-ash.html), falei sobre autorização com policies no Ash e como trazer regras de permissão para perto do domínio.
+
 [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view/) mudou bastante a forma como muita gente escreve interface em Elixir. Em vez de separar tudo entre backend JSON e frontend JavaScript, dá para construir experiências interativas mantendo boa parte da lógica no servidor.
 
 Isso combina bem com [Ash](https://ash-hq.org/), porque Ash também empurra uma parte importante da lógica para um contrato no servidor: Resources, actions, validações, policies e queries.
@@ -139,7 +141,7 @@ Também precisa entender AshPhoenix. Se a equipe tentar usar formulários Ash se
 
 O ganho vem quando o domínio está bem modelado. Se o Resource está confuso, o formulário também vai refletir essa confusão.
 
-## Fechando
+## Concluindo
 
 Ash e Phoenix LiveView se encaixam bem porque os dois valorizam lógica no servidor, mas em camadas diferentes.
 
@@ -148,3 +150,5 @@ LiveView resolve interação e atualização de interface. Ash resolve contrato 
 O resultado não é uma aplicação sem código. É uma aplicação com menos duplicação entre UI e domínio.
 
 Para mim, esse é o ponto mais útil: o formulário deixa de ser o lugar onde a regra é recriada e passa a ser uma entrada bem comportada para actions que já existem.
+
+No [próximo post da série](/posts/2025-10-13-multi-tenancy-com-ash-base-para-saas-em-elixir.html), vou entrar em multi-tenancy com Ash e como isso vira base para SaaS em Elixir.
